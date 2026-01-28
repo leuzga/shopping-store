@@ -6,6 +6,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/home/pages/home-page/home-page.component').then(m => m.HomePageComponent)
   },
   {
+    path: 'products/:id',
+    loadComponent: () => import('./features/products/pages/product-detail-page/product-detail-page.component').then(m => m.ProductDetailPageComponent)
+  },
+  {
     path: 'products',
     loadComponent: () => import('./features/products/pages/product-list-page/product-list-page.component').then(m => m.ProductListPageComponent)
   },

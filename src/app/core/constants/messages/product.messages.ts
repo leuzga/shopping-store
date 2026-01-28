@@ -19,7 +19,9 @@ export const PRODUCT_MESSAGES = {
   },
   STATUS: {
     LOADING: 'Cargando productos...',
+    LOADING_PRODUCT: 'Cargando producto...',
     NO_PRODUCTS: 'No se encontraron productos.',
+    PRODUCT_NOT_FOUND: 'Producto no encontrado',
     ERROR_LOADING: 'Error al cargar los productos. Por favor intenta de nuevo.',
     END_OF_LIST: 'Has llegado al final del catálogo.'
   },

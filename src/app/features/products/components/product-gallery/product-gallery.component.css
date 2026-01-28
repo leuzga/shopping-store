@@ -1,0 +1,108 @@
+/* Gallery Container */
+.gallery-container {
+  @apply flex flex-col gap-4 w-full;
+}
+
+/* Main Image Wrapper */
+.main-image-wrapper {
+  @apply w-full bg-base-200/30 rounded-lg overflow-hidden aspect-square flex items-center justify-center;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.main-image {
+  @apply w-full h-full object-contain;
+}
+
+/* Thumbnails Wrapper */
+.thumbnails-wrapper {
+  @apply flex flex-col gap-2;
+}
+
+.thumbnails-scroll {
+  @apply flex gap-2 overflow-x-auto pb-2 snap-x snap-mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+}
+
+/* Custom scrollbar for webkit browsers */
+.thumbnails-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.thumbnails-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.thumbnails-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+.thumbnails-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Thumbnail Button */
+.thumbnail {
+  @apply flex-shrink-0 w-20 h-20 rounded-lg border-2 border-transparent bg-base-200/30 overflow-hidden cursor-pointer transition-all duration-200 hover:border-primary/50;
+  aspect-ratio: 1;
+  snap-align: start;
+}
+
+.thumbnail:focus {
+  @apply outline-none ring-2 ring-primary ring-offset-2;
+}
+
+.thumbnail.active {
+  @apply border-primary shadow-md;
+}
+
+.thumbnail:disabled {
+  @apply cursor-not-allowed opacity-50;
+}
+
+.thumbnail-image {
+  @apply w-full h-full object-contain;
+}
+
+/* Image Counter */
+.image-counter {
+  @apply text-xs text-base-content/60 font-medium text-center py-2;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .thumbnail {
+    @apply w-16 h-16;
+  }
+
+  .main-image-wrapper {
+    @apply rounded-lg;
+  }
+}
+
+/* Accessibility: High contrast mode */
+@media (prefers-contrast: more) {
+  .thumbnail {
+    @apply border-base-content/30;
+  }
+
+  .thumbnail.active {
+    @apply border-base-content;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.main-image {
+  animation: fadeIn 200ms ease-in-out;
+}

@@ -1,5 +1,6 @@
 import { Component, input, output, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { Product } from '@core/models';
 import { PRODUCT_MESSAGES } from '@core/constants';
 import { AuthService } from '@core/services/auth.service';
@@ -31,7 +32,7 @@ import { ProductModalService } from '../../services/product-modal.service';
       }
 
       <!-- Product Image -->
-      <figure class="w-full h-48 bg-gray-50 flex items-center justify-center overflow-hidden">
+      <figure class="w-full h-48 bg-gray-50 flex items-center justify-center overflow-hidden cursor-pointer" (click)="navigateToDetail()">
         <img
           [src]="product().image"
           [alt]="product().title"
@@ -112,6 +113,7 @@ export class ProductCardComponent {
   private readonly authService = inject(AuthService);
   private readonly wishlistService = inject(WishlistService);
   private readonly modalService = inject(ProductModalService);
+  private readonly router = inject(Router);
 
   readonly product = input.required<Product>();
   readonly addToCart = output<Product>();
@@ -121,6 +123,14 @@ export class ProductCardComponent {
 
   readonly isAuthenticated = computed(() => this.authService.isAuthenticated());
   readonly isFavorite = computed(() => this.wishlistService.isFavorite(this.product().id));
+
+  /**
+   * Event handler: Navigate to product detail page
+   * Routes to /products/:id when image is clicked
+   */
+  navigateToDetail(): void {
+    this.router.navigate(['/products', this.product().id]);
+  }
 
   /**
    * Event handler: Open reviews modal for current product
