@@ -1,0 +1,8 @@
+/**
+ * Footer Component Styles
+ * Responsabilidad única: Layout del componente
+ * Display como contents permite flexibilidad sin restricciones de layout
+ */
+:host {
+  @apply contents;
+}

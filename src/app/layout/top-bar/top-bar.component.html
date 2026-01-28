@@ -1,0 +1,273 @@
+<!-- Main Navigation Bar -->
+<nav
+  class="navbar fixed top-0 left-0 right-0 z-50 shadow-lg px-2 sm:px-3 md:px-4 gap-2 md:gap-4 transition-all duration-300 flex-wrap md:flex-nowrap md:h-16 md:py-0 py-2 justify-between md:justify-start"
+  [class.navbar-scrolled]="isScrolled()">
+
+  <!-- Left Section: Menu & Brand -->
+  <div class="flex items-center gap-1 flex-shrink-0">
+    <!-- Hamburger Menu Button -->
+    <button class="btn btn-ghost btn-circle btn-sm" (click)="toggleMobileMenu()" aria-label="Toggle menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+
+    <!-- Logo and Brand Name -->
+    <a routerLink="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity flex-shrink-0">
+      <!-- Logo Image -->
+      <img src="/logoSS.svg" alt="Shopping Store Logo" class="h-8 w-8 object-contain">
+      <span class="hidden md:inline text-lg lg:text-2xl font-semibold tracking-wide font-stint-ultra">Shopping
+        Store</span>
+    </a>
+  </div>
+
+  <!-- Spacer - Pushes right section to the right on first line -->
+  <div class="hidden md:flex flex-1"></div>
+
+  <!-- Center Section: Search Bar -->
+  <!-- Desktop: flex-1 center, Mobile: second line full width -->
+  <div class="hidden md:flex flex-1 justify-center px-2 items-center">
+    <div class="join w-full max-w-md">
+      <input type="search" placeholder="Search"
+        class="input input-bordered join-item flex-1 input-sm bg-white text-neutral focus:outline-none focus:ring-2 focus:ring-secondary"
+        [value]="searchQuery()" (input)="onSearchInput($event)" (keyup.enter)="onSearchSubmit()"
+        (focus)="onSearchFocus()" (blur)="onSearchBlur()" aria-label="Search products">
+      <button class="btn btn-secondary join-item btn-sm" (click)="onSearchSubmit()" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </button>
+      @if (searchQuery()) {
+      <button class="btn btn-secondary join-item btn-sm" (click)="clearSearch()" aria-label="Clear Search"
+        title="Limpiar búsqueda">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+          <path
+            d="M18.965,8.464l5.029-5.029L22.565,2.006,17.519,7.051,15.313,4.895a2.011,2.011,0,0,0-2.724-.073A19.71,19.71,0,0,1,6.226,8.687L-.006,10.514v.756A12.892,12.892,0,0,0,13.006,24.006h1.241l.261-.182a14.98,14.98,0,0,0,6.886-12.081,2.013,2.013,0,0,0-.611-1.5ZM13.9,6.34l5.477,5.341a12.652,12.652,0,0,1-.456,3.015L11.941,7.9A24.691,24.691,0,0,0,13.9,6.34Zm-.294,15.645h-.6a11.153,11.153,0,0,1-4.293-.859,11.55,11.55,0,0,0,4.348-3.8l.518-.76L11.91,15.43l-.518.761A9.539,9.539,0,0,1,7.8,19.324l-1.229.618a10.9,10.9,0,0,1-2.585-2.563,11.632,11.632,0,0,0,4.357-2.657L6.932,13.277a9.611,9.611,0,0,1-3.974,2.317,10.4,10.4,0,0,1-.921-3.575l4.755-1.394a15.234,15.234,0,0,0,3.423-1.59l7.911,7.7A14.1,14.1,0,0,1,13.608,21.985Z"
+            fill="white" />
+        </svg>
+      </button>
+      }
+    </div>
+  </div>
+
+  <!-- Spacer - Balances the first spacer for perfect centering -->
+  <div class="hidden md:flex flex-1"></div>
+
+  <!-- Right Section: User Menu & Cart -->
+  <div class="flex items-center gap-1 md:gap-2 flex-shrink-0">
+    <!-- Favorites Icon -->
+    <a routerLink="/favorites" class="btn btn-ghost btn-circle btn-xs md:btn-sm relative inline-flex"
+      aria-label="Favoritos">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24"
+        [attr.fill]="hasFavorites() ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2">
+        <path
+          d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+        </path>
+      </svg>
+      @if (hasFavorites()) {
+      <span class="badge badge-secondary badge-xs absolute -top-1 -right-1 text-white font-bold">{{ favoriteCount()
+        }}</span>
+      }
+    </a>
+
+    <!-- Cart Icon -->
+    <button (click)="onOpenCart()" class="btn btn-ghost btn-circle btn-xs md:btn-sm relative inline-flex"
+      aria-label="Shopping cart">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </svg>
+      @if (hasItemsInCart()) {
+      <span class="badge badge-secondary badge-xs absolute -top-1 -right-1">{{ cartCount() }}</span>
+      }
+    </button>
+
+    <!-- User Dropdown -->
+    <div class="block">
+      @if (isAuthenticated()) {
+      <div class="dropdown dropdown-end">
+        <button class="btn btn-ghost btn-circle btn-xs md:btn-sm avatar overflow-hidden" aria-label="User menu">
+          @if (userAvatar()) {
+          <img [src]="userAvatar()" alt="User avatar" class="w-6 h-6 md:w-8 md:h-8 rounded-full object-cover">
+          } @else {
+          <div
+            class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-secondary text-white flex items-center justify-center text-xs font-bold">
+            {{ userInitial() }}
+          </div>
+          }
+        </button>
+        <ul class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a routerLink="/profile">Perfil</a></li>
+          <li><a routerLink="/addresses">Direcciones</a></li>
+          <li><a routerLink="/orders">Pedidos</a></li>
+          <li><a routerLink="/favorites">Favoritos</a></li>
+          <!-- Separator line -->
+          <li class="divider divider-logout my-1"></li>
+          <li>
+            <button (click)="onLogout()" class="text-error w-full text-left" type="button">
+              Cerrar Sesión
+            </button>
+          </li>
+        </ul>
+      </div>
+      } @else {
+      <div class="tooltip tooltip-left" [attr.data-tip]="authMessages.LOGIN.TOOLTIP">
+        <a routerLink="/login" class="btn btn-ghost btn-circle btn-xs md:btn-sm" aria-label="Login">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        </a>
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- Mobile Search Bar (Second line on mobile only) -->
+  <div class="md:hidden w-full px-0 py-2 basis-full">
+    <div class="join w-full">
+      <input type="search" placeholder="Buscar..."
+        class="input input-bordered join-item flex-1 input-sm bg-white text-neutral focus:outline-none focus:ring-2 focus:ring-secondary"
+        [value]="searchQuery()" (input)="onSearchInput($event)" (keyup.enter)="onSearchSubmit()"
+        (focus)="onSearchFocus()" (blur)="onSearchBlur()" aria-label="Search products">
+      <button class="btn btn-secondary join-item btn-sm" (click)="onSearchSubmit()" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </button>
+      @if (searchQuery()) {
+      <div class="tooltip tooltip-bottom" data-tip="Limpiar búsqueda">
+        <button class="btn btn-secondary join-item btn-sm" (click)="clearSearch()" aria-label="Clear Search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            class="stroke-white" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m19 2-5 5"></path>
+            <path d="m2 22 3-5"></path>
+            <path d="M2.88 21.12 7 17l5.95-5.95a2 2 0 0 1 2.83 0l2.12 2.12a2 2 0 0 1 0 2.83L11 22l-5-1-3.12-1V21.12Z">
+            </path>
+          </svg>
+        </button>
+      </div>
+      }
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu Sidebar -->
+@if (isMobileMenuOpen()) {
+<div class="fixed inset-0 z-40 pt-16">
+  <!-- Backdrop -->
+  <div class="absolute inset-0 bg-black/50" (click)="closeMobileMenu()"></div>
+
+  <!-- Sidebar Menu -->
+  <div class="absolute left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-base-100 shadow-lg overflow-y-auto z-50">
+    <div class="p-4 space-y-2">
+      <!-- Navigation Links -->
+      <a routerLink="/" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-base-200 transition-colors"
+        (click)="closeMobileMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 12l2-3m0 0l7-4 7 4M5 9v10a1 1 0 001 1h12a1 1 0 001-1V9m-9 11l-4-4m0 0l-2-2m2 2l2-2m-2 2v-5a1 1 0 011-1h2a1 1 0 011 1v5m-6 0l4 4m0 0l2 2m-2-2l-2 2" />
+        </svg>
+        <span>Home</span>
+      </a>
+
+      <a routerLink="/products" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-base-200 transition-colors"
+        (click)="closeMobileMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        </svg>
+        <span>Productos</span>
+      </a>
+
+      <a routerLink="/categories"
+        class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-base-200 transition-colors"
+        (click)="closeMobileMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+        </svg>
+        <span>Categorías</span>
+      </a>
+
+      <a routerLink="/deals" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-base-200 transition-colors"
+        (click)="closeMobileMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>Ofertas</span>
+      </a>
+
+      <div class="divider my-2"></div>
+
+      <!-- Auth Section -->
+      @if (isAuthenticated()) {
+      <a routerLink="/profile" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-base-200 transition-colors"
+        (click)="closeMobileMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>Mi Perfil</span>
+      </a>
+
+      <a routerLink="/addresses"
+        class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-base-200 transition-colors"
+        (click)="closeMobileMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <span>Direcciones</span>
+      </a>
+
+      <button (click)="onLogout()"
+        class="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-base-200 transition-colors text-error">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+        <span>Cerrar Sesión</span>
+      </button>
+      } @else {
+      <a routerLink="/login" class="w-full btn btn-primary btn-sm" (click)="closeMobileMenu()">
+        Iniciar Sesión
+      </a>
+      <a routerLink="/register" class="w-full btn btn-secondary btn-sm" (click)="closeMobileMenu()">
+        Crear Cuenta
+      </a>
+      }
+
+      <!-- Mobile Search -->
+      <div class="pt-4 border-t">
+        <div class="join w-full">
+          <input type="search" placeholder="Buscar..." class="input input-bordered join-item flex-1 input-sm bg-white"
+            [value]="searchQuery()" (input)="onSearchInput($event)" (keyup.enter)="onSearchSubmit()"
+            aria-label="Search products mobile">
+          @if (searchQuery()) {
+          <div class="tooltip tooltip-left" data-tip="Limpiar búsqueda">
+            <button class="btn btn-secondary join-item btn-sm" (click)="clearSearch()" aria-label="Clear Search">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                class="stroke-white" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="m19 2-5 5"></path>
+                <path d="m2 22 3-5"></path>
+                <path
+                  d="M2.88 21.12 7 17l5.95-5.95a2 2 0 0 1 2.83 0l2.12 2.12a2 2 0 0 1 0 2.83L11 22l-5-1-3.12-1V21.12Z">
+                </path>
+              </svg>
+            </button>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+}

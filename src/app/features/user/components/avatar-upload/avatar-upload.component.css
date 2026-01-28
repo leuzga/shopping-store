@@ -1,0 +1,79 @@
+/**
+ * Avatar Upload Modal Styles
+ * Responsabilidad única: Animaciones y estilos del modal de carga de avatar
+ */
+
+/**
+ * Host como contenedor de contenido (display: contents)
+ * Permite que el modal sea flexible sin restricciones de layout
+ */
+:host {
+  @apply contents;
+}
+
+/**
+ * Overlay del modal - fondo semi-transparente
+ * Posición fija, cobertura total, fondo oscuro y centrado del contenido
+ */
+.modal-overlay {
+  @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50;
+}
+
+/**
+ * Encabezado del modal
+ * Texto en negrita, tamaño grande con margen inferior
+ */
+.modal-header {
+  @apply font-bold text-lg mb-4;
+}
+
+/**
+ * Sección del formulario dentro del modal
+ * Margen inferior para separación
+ */
+.form-section {
+  @apply mb-6;
+}
+
+/**
+ * Contenedor de la vista previa del avatar
+ * Margen inferior, centrado
+ */
+.preview-container {
+  @apply mb-6 flex justify-center;
+}
+
+/**
+ * Animación de entrada del modal
+ * Escala y opacidad para efecto suave al abrir
+ */
+.modal-open {
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    @apply opacity-0;
+    transform: scale(0.95);
+  }
+  to {
+    @apply opacity-100;
+    transform: scale(1);
+  }
+}
+
+/**
+ * Estilos interactivos del input de archivo
+ * Cursor pointer indica que es clickeable
+ */
+.file-input {
+  @apply cursor-pointer;
+}
+
+/**
+ * Botón selector de archivo
+ * Mantiene cursor pointer para mejor UX
+ */
+.file-input::file-selector-button {
+  @apply cursor-pointer;
+}

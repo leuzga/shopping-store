@@ -1,0 +1,23 @@
+/**
+ * Responsabilidad única: Host display y botones sociales
+ * Agrupa estilos para el componente de signup social
+ */
+:host {
+  @apply block;
+}
+
+/**
+ * Contenedor principal para botones sociales
+ * @apply space-y-3 - Espaciado vertical de 0.75rem entre elementos
+ */
+.social-signup-container {
+  @apply space-y-3;
+}
+
+/**
+ * Estilo común para botones sociales
+ * @apply btn btn-outline w-full - Botón outline a ancho completo
+ */
+.social-button {
+  @apply btn btn-outline w-full;
+}

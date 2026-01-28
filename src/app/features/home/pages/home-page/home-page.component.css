@@ -1,0 +1,29 @@
+/**
+ * Responsabilidad única: Layout y fondo de página
+ * Establece el alto mínimo y fondo personalizado
+ */
+:host {
+  @apply block min-h-[calc(100vh-8rem)] bg-base-100;
+}
+
+/* Page content container with fade-in animation */
+div.min-h-screen {
+  opacity: 0;
+  animation: fadeIn 0.6s ease-in-out forwards;
+}
+
+/* Apply fade-in animation when component is visible */
+div.fade-in {
+  animation: fadeIn 0.6s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,52 @@
+<div class="min-h-screen flex items-center justify-center px-4 py-8" [class.fade-in]="isVisible()">
+  <div class="w-full max-w-md">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold mb-2">Bienvenido</h1>
+      <p class="text-base-content/70">Inicia sesión en tu cuenta</p>
+    </div>
+
+    <!-- Error Alert -->
+    @if (error()) {
+      <div class="alert alert-error mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l-2-2m0 0l-2-2m2 2l2-2m-2 2l-2 2m8-8l2 2m0 0l2 2m-2-2l-2-2m2 2l2-2"/>
+        </svg>
+        <div>
+          <h3 class="font-bold">Error</h3>
+          <div class="text-sm">{{ error() }}</div>
+        </div>
+        <button class="btn btn-sm" (click)="clearError()">Cerrar</button>
+      </div>
+    }
+
+    <!-- Login Form Card -->
+    <div class="card bg-base-100 shadow-lg">
+      <div class="card-body">
+        <!-- Login Form -->
+        <app-login-form
+          (loginSuccess)="onLoginSuccess()"
+          (loginError)="onLoginError($event)"
+        />
+
+        <!-- Divider -->
+        <div class="divider my-4">O</div>
+
+        <!-- Social Signup -->
+        <app-social-signup
+          (signupSuccess)="onLoginSuccess()"
+        />
+      </div>
+    </div>
+
+    <!-- Sign Up Link -->
+    <div class="text-center mt-6">
+      <p class="text-base-content/70">
+        ¿No tienes cuenta?
+        <a routerLink="/register" class="link link-primary font-semibold">
+          Regístrate aquí
+        </a>
+      </p>
+    </div>
+  </div>
+</div>

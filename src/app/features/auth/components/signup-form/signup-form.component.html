@@ -1,0 +1,129 @@
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="form-container">
+  <!-- First Name -->
+  <div class="form-field">
+    <label class="label" for="firstName">
+      <span class="label-text font-medium">Nombre</span>
+    </label>
+    <input
+      id="firstName"
+      type="text"
+      formControlName="firstName"
+      placeholder="Juan"
+      class="input input-bordered w-full"
+      [class.input-error]="firstNameError()"
+      (blur)="onFieldBlur('firstName')"
+    />
+    @if (firstNameError()) {
+      <p class="error-message">{{ firstNameError() }}</p>
+    }
+  </div>
+
+  <!-- Last Name -->
+  <div class="form-field">
+    <label class="label" for="lastName">
+      <span class="label-text font-medium">Apellido</span>
+    </label>
+    <input
+      id="lastName"
+      type="text"
+      formControlName="lastName"
+      placeholder="Pérez"
+      class="input input-bordered w-full"
+      [class.input-error]="lastNameError()"
+      (blur)="onFieldBlur('lastName')"
+    />
+    @if (lastNameError()) {
+      <p class="error-message">{{ lastNameError() }}</p>
+    }
+  </div>
+
+  <!-- Email -->
+  <div class="form-field">
+    <label class="label" for="email">
+      <span class="label-text font-medium">Email</span>
+    </label>
+    <input
+      id="email"
+      type="email"
+      formControlName="email"
+      placeholder="tu@email.com"
+      class="input input-bordered w-full"
+      [class.input-error]="emailError()"
+      (blur)="onFieldBlur('email')"
+    />
+    @if (emailError()) {
+      <p class="error-message">{{ emailError() }}</p>
+    }
+  </div>
+
+  <!-- Phone -->
+  <div class="form-field">
+    <label class="label" for="phone">
+      <span class="label-text font-medium">Teléfono</span>
+    </label>
+    <input
+      id="phone"
+      type="tel"
+      formControlName="phone"
+      placeholder="1234567890"
+      class="input input-bordered w-full"
+      [class.input-error]="phoneError()"
+      (blur)="onFieldBlur('phone')"
+    />
+    @if (phoneError()) {
+      <p class="error-message">{{ phoneError() }}</p>
+    }
+  </div>
+
+  <!-- Password -->
+  <div class="form-field">
+    <label class="label" for="password">
+      <span class="label-text font-medium">Contraseña</span>
+    </label>
+    <input
+      id="password"
+      type="password"
+      formControlName="password"
+      placeholder="••••••••"
+      class="input input-bordered w-full"
+      [class.input-error]="passwordError()"
+      (blur)="onFieldBlur('password')"
+    />
+    @if (passwordError()) {
+      <p class="error-message">{{ passwordError() }}</p>
+    }
+  </div>
+
+  <!-- Confirm Password -->
+  <div class="form-field">
+    <label class="label" for="confirmPassword">
+      <span class="label-text font-medium">Confirmar Contraseña</span>
+    </label>
+    <input
+      id="confirmPassword"
+      type="password"
+      formControlName="confirmPassword"
+      placeholder="••••••••"
+      class="input input-bordered w-full"
+      [class.input-error]="confirmPasswordError()"
+      (blur)="onFieldBlur('confirmPassword')"
+    />
+    @if (confirmPasswordError()) {
+      <p class="error-message">{{ confirmPasswordError() }}</p>
+    }
+  </div>
+
+  <!-- Submit Button -->
+  <button
+    type="submit"
+    class="submit-button"
+    [disabled]="!formValid() || isLoading()"
+  >
+    @if (isLoading()) {
+      <span class="loading loading-spinner loading-xs"></span>
+      Registrando...
+    } @else {
+      Crear Cuenta
+    }
+  </button>
+</form>

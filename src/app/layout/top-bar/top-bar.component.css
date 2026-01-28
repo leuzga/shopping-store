@@ -1,0 +1,56 @@
+/**
+ * TopBar Component Styles
+ * Responsabilidad única: Layout del componente
+ * La mayoría del styling se maneja con clases Tailwind y DaisyUI en el template.
+ * Este archivo contiene overrides específicos del componente si es necesario.
+ */
+
+/**
+ * Display como contents permite que los menús dropdown tengan un layering adecuado
+ * Sin interferencia de restricciones de layout del host
+ */
+:host {
+  @apply contents;
+}
+
+.navbar {
+  background-color: rgb(22, 53, 80);
+  @apply text-white flex-wrap md:flex-nowrap;
+}
+
+.navbar-scrolled {
+  background-color: rgb(60 114 134 / 65%);
+  @apply backdrop-blur-sm border-b border-white/5;
+}
+
+/* Dropdown menu styling */
+:host ::ng-deep .dropdown-content {
+  @apply bg-base-100;
+}
+
+:host ::ng-deep .dropdown-content li a {
+  @apply text-neutral;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+:host ::ng-deep .dropdown-content li a:hover {
+  @apply bg-secondary text-white;
+}
+
+/* Logout button styling */
+:host ::ng-deep .dropdown-content li button {
+  @apply text-error w-full text-left px-4 py-2 rounded;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+:host ::ng-deep .dropdown-content li button:hover {
+  @apply bg-secondary text-white;
+}
+
+/* Separator line before logout button */
+:host ::ng-deep .dropdown-content li.divider-logout {
+  border-top: 0.25px solid #d1d5db;
+  margin: 0.5rem 0;
+  height: auto;
+  padding: 0;
+}

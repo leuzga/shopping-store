@@ -1,0 +1,55 @@
+/**
+ * Responsabilidad única: Host y validación de formularios
+ * Define estados de error para campos de entrada
+ */
+:host {
+  @apply block;
+}
+
+/**
+ * Contenedor principal del formulario
+ * @apply space-y-4 - Espaciado vertical entre campos
+ */
+.form-container {
+  @apply space-y-4;
+}
+
+/**
+ * Campo individual del formulario
+ * @apply form-control w-full - Contenedor y ancho completo
+ */
+.form-field {
+  @apply form-control w-full;
+}
+
+/**
+ * Mensaje de error debajo del campo
+ * @apply text-error text-sm mt-1 - Color rojo, tamaño pequeño y margen superior
+ */
+.error-message {
+  @apply text-error text-sm mt-1;
+}
+
+/**
+ * Contenedor para checkbox
+ * @apply form-control - Applica estilos de control de formulario
+ */
+.form-checkbox {
+  @apply form-control;
+}
+
+/**
+ * Botón de envío del formulario
+ * @apply btn btn-primary w-full - Botón primario a ancho completo
+ */
+.submit-button {
+  @apply btn btn-primary w-full;
+}
+
+/**
+ * Estado de error para input
+ * @apply border-error - Añade borde rojo para campos con error
+ */
+.input-error {
+  @apply border-error;
+}

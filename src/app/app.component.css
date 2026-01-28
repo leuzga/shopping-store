@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 4rem; /* Offset for sticky header if needed globally, or rely on individual page offsets */
+}
+
+@media (min-width: 768px) {
+  .page-container {
+    padding-top: 5rem;
+  }
+}

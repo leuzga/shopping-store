@@ -1,0 +1,46 @@
+<div class="min-h-screen flex flex-col items-center justify-center gap-8 px-4"
+  [class.fade-in]="isVisible">
+  <div class="text-center space-y-4">
+    <h1 class="text-5xl md:text-6xl font-bold text-primary">🎉 Deals Page</h1>
+    <p class="text-xl md:text-2xl text-base-content/70">
+      Discover amazing deals and discounts
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mt-8">
+    <div class="card bg-gradient-to-br from-secondary/20 to-secondary/5 shadow-lg border-2 border-secondary">
+      <div class="card-body text-center">
+        <h2 class="card-title justify-center text-2xl">⚡ Flash Sale</h2>
+        <p>Limited time offers</p>
+        <div class="badge badge-secondary">50% OFF</div>
+        <div class="card-actions justify-center mt-4">
+          <a routerLink="/products" class="btn btn-secondary">Shop Flash Sale</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-gradient-to-br from-accent/20 to-accent/5 shadow-lg border-2 border-accent">
+      <div class="card-body text-center">
+        <h2 class="card-title justify-center text-2xl">🏷️ Weekly Deals</h2>
+        <p>Updated every week</p>
+        <div class="badge badge-accent">30% OFF</div>
+        <div class="card-actions justify-center mt-4">
+          <a routerLink="/products" class="btn btn-accent">Browse Deals</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-gradient-to-br from-success/20 to-success/5 shadow-lg border-2 border-success">
+      <div class="card-body text-center">
+        <h2 class="card-title justify-center text-2xl">🎁 Bundles</h2>
+        <p>Save more with bundles</p>
+        <div class="badge badge-success">20% OFF</div>
+        <div class="card-actions justify-center mt-4">
+          <a routerLink="/products" class="btn btn-success">View Bundles</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a routerLink="/" class="btn btn-outline mt-8">Back to Home</a>
+</div>

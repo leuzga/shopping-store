@@ -1,0 +1,33 @@
+<div class="min-h-screen flex flex-col items-center justify-center gap-8 px-4"
+  [class.fade-in]="isVisible">
+  <div class="text-center space-y-4">
+    <h1 class="text-5xl md:text-6xl font-bold text-primary">📂 Categories Page</h1>
+    <p class="text-xl md:text-2xl text-base-content/70">
+      Browse our product categories
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mt-8">
+    <div class="card bg-base-100 shadow-lg">
+      <div class="card-body text-center">
+        <h2 class="card-title justify-center text-2xl">📱 Electronics</h2>
+        <p>Latest gadgets and devices</p>
+        <div class="card-actions justify-center mt-4">
+          <a routerLink="/products" class="btn btn-secondary">Browse</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-base-100 shadow-lg">
+      <div class="card-body text-center">
+        <h2 class="card-title justify-center text-2xl">👗 Fashion</h2>
+        <p>Trendy clothing and accessories</p>
+        <div class="card-actions justify-center mt-4">
+          <a routerLink="/products" class="btn btn-secondary">Browse</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a routerLink="/" class="btn btn-outline mt-8">Back to Home</a>
+</div>
