@@ -28,87 +28,8 @@ import { Product } from '@core/models';
   selector: 'app-favorites-page',
   standalone: true,
   imports: [CommonModule, RouterLink, ProductCardComponent],
-  template: `
-    <div class="favorites-container">
-      <!-- Header Section -->
-      <div class="favorites-header">
-        <h1 class="favorites-title">Mis Favoritos</h1>
-        @if (displayProducts().length > 0) {
-          <span class="favorite-count">{{ displayProducts().length }} producto{{ displayProducts().length !== 1 ? 's' : '' }}</span>
-        }
-      </div>
-
-      <!-- Empty State -->
-      @if (displayProducts().length === 0) {
-        <div class="empty-state">
-          <svg xmlns="http://www.w3.org/2000/svg" class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-          </svg>
-          <h2 class="empty-title">No tienes favoritos</h2>
-          <p class="empty-description">Marca productos con el corazón para agregarlos a favoritos</p>
-          <a routerLink="/products" class="btn btn-primary btn-lg">
-            Explorar Productos
-          </a>
-        </div>
-      }
-
-      <!-- Favorites Grid -->
-      @if (displayProducts().length > 0) {
-        <div class="favorites-grid">
-          @for (product of displayProducts(); track product.id; let index = $index) {
-            <app-product-card
-              [product]="product"
-              (addToCart)="onAddToCart($event)"
-              [id]="'favorite-' + index"
-              [attr.data-product-index]="index" />
-          }
-        </div>
-      }
-    </div>
-  `,
-  styles: [`
-    :host {
-      @apply block h-[calc(100vh-4rem)];
-    }
-
-    .favorites-container {
-      @apply h-full w-full max-w-7xl mx-auto px-4 py-8 flex flex-col;
-    }
-
-    .favorites-header {
-      @apply flex items-center justify-between mb-8 gap-4;
-    }
-
-    .favorites-title {
-      @apply text-3xl md:text-4xl font-bold text-base-content;
-    }
-
-    .favorite-count {
-      @apply text-sm md:text-base text-base-content/70 font-medium;
-    }
-
-    /* Empty State Styles */
-    .empty-state {
-      @apply flex flex-col items-center justify-center flex-1 py-16 px-4;
-    }
-
-    .empty-icon {
-      @apply h-24 w-24 text-base-300 mb-4;
-    }
-
-    .empty-title {
-      @apply text-2xl font-bold text-base-content mb-2;
-    }
-
-    .empty-description {
-      @apply text-base-content/60 mb-6 text-center;
-    }
-
-    /* Grid Styles */
-    .favorites-grid {
-      @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6;
-    }
-  `]
+  templateUrl: './favorites-page.component.html',
+  styleUrl: './favorites-page.component.css'
 })
 export class FavoritesPageComponent {
   private readonly wishlistService = inject(WishlistService);

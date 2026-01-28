@@ -1,0 +1,41 @@
+:host {
+  @apply block h-[calc(100vh-4rem)];
+}
+
+.favorites-container {
+  @apply h-full w-full max-w-7xl mx-auto px-4 py-8 flex flex-col;
+}
+
+.favorites-header {
+  @apply flex items-center justify-between mb-8 gap-4;
+}
+
+.favorites-title {
+  @apply text-3xl md:text-4xl font-bold text-base-content;
+}
+
+.favorite-count {
+  @apply text-sm md:text-base text-base-content/70 font-medium;
+}
+
+/* Empty State Styles */
+.empty-state {
+  @apply flex flex-col items-center justify-center flex-1 py-16 px-4;
+}
+
+.empty-icon {
+  @apply h-24 w-24 text-base-300 mb-4;
+}
+
+.empty-title {
+  @apply text-2xl font-bold text-base-content mb-2;
+}
+
+.empty-description {
+  @apply text-base-content/60 mb-6 text-center;
+}
+
+/* Grid Styles */
+.favorites-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6;
+}

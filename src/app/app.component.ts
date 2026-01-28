@@ -2,7 +2,7 @@ import { Component, effect, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { TopBarComponent } from './layout/top-bar/top-bar.component';
 import { FooterComponent } from './layout/footer/footer.component';
-import { CartDisplayComponent } from './features/cart/components/cart-display/cart-display.component';
+import { CartDisplayComponent } from './features/cart/components/cart-display';
 
 @Component({
   selector: 'app-root',

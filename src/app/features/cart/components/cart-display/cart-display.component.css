@@ -1,0 +1,145 @@
+:host {
+  @apply contents;
+}
+
+/* Backdrop overlay */
+.cart-backdrop {
+  @apply fixed inset-0 bg-black/50 z-30 animate-fade-in;
+}
+
+/* Cart panel drawer */
+.cart-panel {
+  @apply fixed right-0 top-16 w-full max-w-md bg-base-100 shadow-2xl z-40 flex flex-col border-l border-base-200;
+  height: calc(100vh - 4rem);
+}
+
+/* Header section */
+.cart-header {
+  @apply flex justify-between items-center p-4 sm:p-6 border-b border-base-200 bg-base-200/30 flex-shrink-0;
+}
+
+.cart-title {
+  @apply text-xl sm:text-2xl font-black text-base-content;
+}
+
+.header-actions {
+  @apply flex items-center gap-2;
+}
+
+.clear-btn {
+  @apply btn btn-ghost btn-circle btn-sm text-error hover:text-error hover:bg-error/10 border-none bg-transparent;
+}
+
+.close-btn {
+  @apply btn btn-ghost btn-circle btn-sm text-base-content/60 hover:text-base-content border-none bg-transparent;
+}
+
+/* Content section */
+.cart-content {
+  @apply flex-1 overflow-y-auto p-4 sm:p-6 space-y-4;
+}
+
+/* Empty state */
+.empty-state {
+  @apply flex flex-col items-center justify-center h-full text-center py-12;
+}
+
+.empty-icon {
+  @apply text-6xl mb-4;
+}
+
+.empty-title {
+  @apply text-lg font-bold text-base-content mb-2;
+}
+
+.empty-description {
+  @apply text-sm text-base-content/60;
+}
+
+/* Items list */
+.items-list {
+  @apply space-y-3;
+}
+
+/* Summary section */
+.cart-summary {
+  @apply p-4 sm:p-6 border-t border-base-200 space-y-4 flex-shrink-0;
+}
+
+/* Shipping badge */
+.shipping-badge {
+  @apply flex items-center gap-2 p-3 rounded-lg bg-success/10 border border-success/20;
+}
+
+.shipping-icon {
+  @apply text-lg;
+}
+
+.shipping-text {
+  @apply text-xs font-bold text-success;
+}
+
+/* Total row */
+.total-row {
+  @apply flex justify-between items-center pt-2;
+}
+
+.total-label {
+  @apply text-sm font-bold text-base-content/70;
+}
+
+.total-amount {
+  @apply text-2xl font-black text-primary;
+}
+
+/* Actions footer */
+.cart-actions {
+  @apply flex gap-3 p-4 sm:p-6 border-t border-base-200 bg-base-200/30 flex-shrink-0;
+}
+
+.btn-continue-shopping {
+  @apply btn btn-ghost btn-sm flex-1 border-none bg-transparent text-base-content;
+}
+
+.btn-checkout {
+  @apply btn btn-secondary btn-sm flex-1 border-none text-white;
+}
+
+.btn-checkout:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Scrollbar styling */
+.cart-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cart-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cart-content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* Confirmation Dialog Styles */
+.modal-title {
+  @apply text-lg sm:text-xl font-black text-base-content mb-3;
+}
+
+.dialog-message {
+  @apply text-sm text-base-content/70 mb-6 leading-relaxed;
+}
+
+.dialog-actions {
+  @apply flex gap-3;
+}
+
+.btn-cancel {
+  @apply btn btn-ghost btn-sm flex-1 border-none bg-transparent text-base-content;
+}
+
+.btn-confirm {
+  @apply btn btn-error btn-sm flex-1 border-none text-white;
+}

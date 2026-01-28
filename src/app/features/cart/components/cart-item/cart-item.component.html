@@ -1,0 +1,42 @@
+<div class="cart-item">
+  <!-- Product Image -->
+  <div class="item-image">
+    <img [src]="item().image" [alt]="item().title" />
+  </div>
+
+  <!-- Item Details -->
+  <div class="item-details">
+    <h3 class="item-title">{{ item().title }}</h3>
+    <p class="item-price">{{ item().price | currency }}</p>
+  </div>
+
+  <!-- Quantity Controls -->
+  <div class="quantity-controls">
+    <button
+      class="quantity-btn"
+      (click)="decrementQuantity()"
+      [attr.aria-label]="messages.ACTIONS.DECREMENT">
+      −
+    </button>
+    <span class="quantity-value">{{ item().quantity }}</span>
+    <button
+      class="quantity-btn"
+      (click)="incrementQuantity()"
+      [attr.aria-label]="messages.ACTIONS.INCREMENT">
+      +
+    </button>
+  </div>
+
+  <!-- Subtotal -->
+  <div class="item-subtotal">
+    {{ (item().price * item().quantity) | currency }}
+  </div>
+
+  <!-- Remove Button -->
+  <button
+    class="remove-btn"
+    (click)="removeFromCart()"
+    [attr.aria-label]="messages.ACTIONS.REMOVE_ITEM">
+    ✕
+  </button>
+</div>

@@ -1,0 +1,39 @@
+.product-list-container {
+  @apply max-w-7xl mx-auto px-4 pb-8;
+}
+
+.sticky-header {
+  @apply sticky z-30 py-4 mb-6 transition-all duration-300;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  @apply shadow-sm;
+  top: 4rem;
+}
+
+.product-list-title {
+  @apply text-3xl font-black text-base-content tracking-tight;
+}
+
+.header-right-section {
+  @apply flex items-center gap-4 flex-wrap justify-end;
+}
+
+.pagination-join {
+  @apply join shadow-md bg-base-100 border border-base-200;
+}
+
+.product-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 min-h-[400px];
+}
+
+.loading-container {
+  @apply flex justify-center p-12;
+}
+
+.scroll-trigger {
+  @apply h-10 w-full mt-4;
+}
+
+.end-list-alert {
+  @apply alert alert-info shadow-sm mt-8 border-none bg-base-200;
+}
