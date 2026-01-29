@@ -4,7 +4,7 @@
 
 .sticky-header {
   @apply sticky z-30 py-4 mb-6 transition-all duration-300;
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(10px);
   @apply shadow-sm;
   top: 4rem;

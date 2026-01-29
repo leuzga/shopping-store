@@ -1,0 +1,28 @@
+@if (banner(); as promo) {
+  <div class="promo-banner-wrapper" [class]="'layout-' + promo.layout">
+    <div class="promo-banner" [style.backgroundColor]="promo.backgroundColor">
+      <!-- Content Section -->
+      <div class="promo-content">
+        <h2 class="promo-title">{{ promo.title }}</h2>
+        @if (promo.subtitle) {
+          <p class="promo-subtitle">{{ promo.subtitle }}</p>
+        }
+        <a [href]="promo.ctaLink" class="promo-button">
+          {{ promo.cta }}
+        </a>
+      </div>
+
+      <!-- Image Section -->
+      @if (promo.image && promo.layout !== 'full') {
+        <div class="promo-image">
+          <img [src]="promo.image" [alt]="promo.title" loading="lazy" />
+        </div>
+      }
+    </div>
+
+    <!-- Full Width Image -->
+    @if (promo.image && promo.layout === 'full') {
+      <img [src]="promo.image" [alt]="promo.title" class="promo-full-image" loading="lazy" />
+    }
+  </div>
+}

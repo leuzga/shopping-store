@@ -1,0 +1,148 @@
+/* Promo Banner Wrapper */
+.promo-banner-wrapper {
+  @apply w-full py-8 px-4 md:px-8;
+}
+
+/* Promo Banner Container */
+.promo-banner {
+  @apply max-w-6xl mx-auto rounded-lg overflow-hidden flex items-center justify-between gap-8 md:gap-12;
+  min-height: 300px;
+}
+
+/* Content Section */
+.promo-content {
+  @apply flex-1 p-6 md:p-10 text-white z-10;
+  animation: slideInContent 0.6s ease-out;
+}
+
+.promo-title {
+  @apply text-3xl md:text-4xl font-black mb-4 leading-tight drop-shadow-lg;
+}
+
+.promo-subtitle {
+  @apply text-base md:text-lg text-white/90 mb-6 drop-shadow-md;
+}
+
+/* Promo Button */
+.promo-button {
+  @apply inline-block px-6 md:px-8 py-3 md:py-4 bg-white text-base-content font-bold rounded-lg hover:bg-white/90 transition-all duration-200 drop-shadow-lg;
+}
+
+/* Image Section */
+.promo-image {
+  @apply hidden md:flex flex-1 items-center justify-center;
+}
+
+.promo-image img {
+  @apply h-full object-contain max-h-80;
+  animation: slideInImage 0.6s ease-out;
+}
+
+/* Full Width Image */
+.promo-full-image {
+  @apply w-full h-auto object-cover rounded-lg max-h-96;
+}
+
+/* Layout Variations */
+
+/* Layout: Left (Image on Left) */
+.layout-left .promo-banner {
+  @apply flex-row-reverse;
+}
+
+.layout-left .promo-image {
+  @apply hidden md:flex;
+}
+
+/* Layout: Right (Image on Right) */
+.layout-right .promo-banner {
+  @apply flex-row;
+}
+
+.layout-right .promo-image {
+  @apply hidden md:flex;
+}
+
+/* Layout: Full (Full width background) */
+.layout-full .promo-banner {
+  @apply relative min-h-96 md:min-h-[500px];
+}
+
+.layout-full .promo-full-image {
+  @apply absolute inset-0 w-full h-full object-cover z-0 rounded-lg;
+}
+
+.layout-full .promo-content {
+  @apply relative z-10;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .promo-banner {
+    @apply flex-col gap-4;
+    min-height: auto;
+  }
+
+  .promo-content {
+    @apply p-4 md:p-6;
+  }
+
+  .promo-title {
+    @apply text-xl md:text-2xl;
+  }
+
+  .promo-subtitle {
+    @apply text-sm;
+  }
+
+  .promo-button {
+    @apply px-4 py-2 text-sm;
+  }
+
+  .layout-left .promo-banner,
+  .layout-right .promo-banner {
+    @apply flex-col;
+  }
+
+  .promo-image {
+    @apply flex md:hidden w-full;
+  }
+
+  .promo-image img {
+    @apply w-full max-h-64;
+  }
+}
+
+/* Animations */
+@keyframes slideInContent {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInImage {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: more) {
+  .promo-banner {
+    @apply border-2 border-base-content;
+  }
+
+  .promo-button {
+    @apply border-2 border-base-content;
+  }
+}

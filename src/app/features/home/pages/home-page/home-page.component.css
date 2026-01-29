@@ -1,22 +1,23 @@
 /**
- * Responsabilidad única: Layout y fondo de página
- * Establece el alto mínimo y fondo personalizado
+ * Responsabilidad única: Home page layout container
+ * Orchestrates hero, category sections, and promotional banners
  */
 :host {
-  @apply block min-h-[calc(100vh-8rem)] bg-base-100;
+  @apply block min-h-[calc(100vh-8rem)];
 }
 
-/* Page content container with fade-in animation */
-div.min-h-screen {
-  opacity: 0;
+/* Home Page Wrapper - Full bleed carousel at top */
+.home-page-wrapper {
+  @apply w-full opacity-0 flex flex-col;
+  animation: fadeIn 0.6s ease-in-out forwards;
+  margin-top: -4rem;
+}
+
+.home-page-wrapper.fade-in {
   animation: fadeIn 0.6s ease-in-out forwards;
 }
 
-/* Apply fade-in animation when component is visible */
-div.fade-in {
-  animation: fadeIn 0.6s ease-in-out forwards;
-}
-
+/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -25,5 +26,18 @@ div.fade-in {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .home-page-wrapper {
+    margin-top: -5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  :host {
+    @apply min-h-[calc(100vh-4rem)];
   }
 }

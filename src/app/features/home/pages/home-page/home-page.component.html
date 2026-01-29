@@ -1,41 +1,15 @@
-<div class="min-h-screen flex flex-col items-center justify-center gap-8 px-4"
-  [class.fade-in]="isVisible">
-  <div class="text-center space-y-4">
-    <h1 class="text-5xl md:text-6xl font-bold text-primary">🏠 Home Page</h1>
-    <p class="text-xl md:text-2xl text-base-content/70">
-      Welcome to Shopping Store
-    </p>
-  </div>
+<div class="home-page-wrapper" [class.fade-in]="isVisible()">
+  <!-- Swiper Carousel Section -->
+  <app-swiper-carousel [items]="carouselItems()"></app-swiper-carousel>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mt-8">
-    <div class="card bg-base-100 shadow-lg">
-      <div class="card-body text-center">
-        <h2 class="card-title justify-center text-2xl">📦 Products</h2>
-        <p>Browse our amazing collection of products</p>
-        <div class="card-actions justify-center mt-4">
-          <a routerLink="/products" class="btn btn-primary">Shop Now</a>
-        </div>
-      </div>
-    </div>
+  <!-- Featured Categories Section -->
+  @for (section of categorySections(); track section.id) {
+    <!-- Category Products -->
+    <app-category-section [section]="section"></app-category-section>
 
-    <div class="card bg-base-100 shadow-lg">
-      <div class="card-body text-center">
-        <h2 class="card-title justify-center text-2xl">🏷️ Categories</h2>
-        <p>Find products by category</p>
-        <div class="card-actions justify-center mt-4">
-          <a routerLink="/categories" class="btn btn-primary">View Categories</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="card bg-base-100 shadow-lg">
-      <div class="card-body text-center">
-        <h2 class="card-title justify-center text-2xl">🎉 Deals</h2>
-        <p>Check out our latest deals</p>
-        <div class="card-actions justify-center mt-4">
-          <a routerLink="/deals" class="btn btn-primary">See Deals</a>
-        </div>
-      </div>
-    </div>
-  </div>
+    <!-- Promotional Banner Between Sections -->
+    @if (promoBanners().length > 0 && $index < promoBanners().length) {
+      <app-promo-banner [banner]="promoBanners()[$index]"></app-promo-banner>
+    }
+  }
 </div>

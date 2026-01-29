@@ -1,0 +1,75 @@
+<div class="swiper-carousel-wrapper">
+  <!-- Swiper Container -->
+  <swiper-container
+    #swiperContainer
+    class="swiper-carousel"
+    [attr.speed]="1000"
+    [attr.autoplay-delay]="3500"
+    [attr.loop]="true"
+    [attr.grab-cursor]="true"
+    (swiperslidechange)="onSlideChange($event)">
+    @for (item of items(); track item.id; let index = $index) {
+      <swiper-slide class="hero-slide">
+        <!-- Background Image with Gradient Overlay -->
+        <img
+          [src]="item.image"
+          [alt]="item.title"
+          class="hero-image"
+          loading="lazy"
+          (load)="onImageLoad()" />
+        <div class="hero-gradient"></div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1 class="hero-title animate">{{ item.title }}</h1>
+            <p class="hero-subtitle animate">{{ item.subtitle }}</p>
+            <button
+              class="hero-cta animate"
+              (click)="navigateToProducts(item)"
+              type="button">
+              {{ item.cta }}
+            </button>
+          </div>
+        </div>
+      </swiper-slide>
+    }
+  </swiper-container>
+
+  <!-- Custom Navigation Arrows -->
+  <div class="hero-navigation">
+    <button class="nav-button prev" (click)="slidePrev()">
+      ❮
+    </button>
+    <button class="nav-button next" (click)="slideNext()">
+      ❯
+    </button>
+  </div>
+
+  <!-- Custom Pagination Indicators -->
+  @if (items().length > 1) {
+    <div class="custom-pagination">
+      @for (item of items(); track item.id; let i = $index) {
+        <button
+          class="pagination-dot"
+          [class.active]="activeSlide() === i"
+          (click)="goToSlide(i)"></button>
+      }
+    </div>
+  }
+
+  <!-- Wave Divider -->
+  <svg class="wave-divider" viewBox="0 0 1200 120" preserveAspectRatio="none">
+    <path
+      d="M0,50 Q300,0 600,50 T1200,50 L1200,120 L0,120 Z"
+      fill="currentColor"></path>
+  </svg>
+
+  <!-- Scroll Down Indicator Button -->
+  <button
+    class="scroll-indicator"
+    (click)="scrollToNextSection()"
+    aria-label="Scroll to next section">
+    <div class="mouse-wheel"></div>
+  </button>
+</div>

@@ -24,22 +24,23 @@ module.exports = {
   ],
   daisyui: {
     themes: [
+      "light",
       {
         shoppingstore: {
           // Primary - Main brand color (blue)
-          "primary": "#2196f3",
+          primary: "#2196f3",
           "primary-content": "#ffffff",
 
           // Secondary - Accent color (pink)
-          "secondary": "#ff4081",
+          secondary: "#ff4081",
           "secondary-content": "#ffffff",
 
           // Accent (same as secondary for consistency)
-          "accent": "#ff4081",
+          accent: "#ff4081",
           "accent-content": "#ffffff",
 
           // Neutral tones
-          "neutral": "#3d4451",
+          neutral: "#3d4451",
           "neutral-content": "#ffffff",
 
           // Base colors (backgrounds)
@@ -49,25 +50,16 @@ module.exports = {
           "base-content": "#212529",
 
           // Semantic colors
-          "info": "#3abff8",
+          info: "#3abff8",
           "info-content": "#002b3d",
-          "success": "#36d399",
+          success: "#36d399",
           "success-content": "#003320",
-          "warning": "#fbbd23",
+          warning: "#fbbd23",
           "warning-content": "#382800",
-          "error": "#f87272",
+          error: "#f87272",
           "error-content": "#470000",
         },
       },
     ],
-    // Disable dark mode auto-detection
-    darkTheme: false,
-    // Enable all DaisyUI utilities
-    base: true,
-    styled: true,
-    utils: true,
-    prefix: "",
-    logs: true,
-    themeRoot: ":root",
   },
 };

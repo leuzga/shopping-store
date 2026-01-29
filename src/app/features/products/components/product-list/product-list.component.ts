@@ -1,5 +1,6 @@
 import { Component, inject, signal, computed, effect, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { ProductFacade } from '../../services/product.facade';
 import { ProductFilterService, type CategoryType } from '../../services/product-filter.service';
 import { ProductSortService, type SortType } from '../../services/product-sort.service';
@@ -24,6 +25,7 @@ export class ProductListComponent implements AfterViewInit, OnDestroy {
   private readonly sortService = inject(ProductSortService);
   readonly searchService = inject(ProductSearchService);
   private readonly cartService = inject(CartService);
+  private readonly router = inject(Router);
   @ViewChild('loadMoreTrigger') loadMoreTrigger?: ElementRef;
 
   // Domain Constants & Bound Facade Signals
@@ -35,8 +37,8 @@ export class ProductListComponent implements AfterViewInit, OnDestroy {
 
   // Component State
   readonly currentPage = signal<number>(1);
-  readonly limit = PAGINATION.DEFAULT_PAGE_SIZE;
-  readonly totalPages = computed(() => Math.ceil(this.totalProducts() / this.limit) || 1);
+  readonly limit = signal<number>(this.getInitialLimit());
+  readonly totalPages = computed(() => Math.ceil(this.totalProducts() / this.limit()) || 1);
 
   /**
    * Computed signal: Apply search + filter + sort locally after data is consumed
@@ -85,7 +87,7 @@ export class ProductListComponent implements AfterViewInit, OnDestroy {
    * Responsibility: Show correct pagination for filtered product set
    */
   readonly displayedTotalPages = computed(() =>
-    Math.ceil(this.displayedTotalProducts() / this.limit) || 1
+    Math.ceil(this.displayedTotalProducts() / this.limit()) || 1
   );
 
   private observer?: IntersectionObserver;
@@ -97,11 +99,20 @@ export class ProductListComponent implements AfterViewInit, OnDestroy {
   }
 
   /**
+   * Pure function: Get initial limit from router state or use default
+   * Responsibility: Determine page size based on navigation context
+   */
+  private getInitialLimit(): number {
+    const state = this.router.getCurrentNavigation()?.extras?.state || {};
+    return (state as any)?.initialLoadSize || PAGINATION.DEFAULT_PAGE_SIZE;
+  }
+
+  /**
    * Pure function: Initialize first product load
    * Responsibility: Load first batch of products on component init
    */
   private initializeProductLoading(): void {
-    this.facade.loadProducts(this.limit, 0);
+    this.facade.loadProducts(this.limit(), 0);
   }
 
   /**
@@ -141,7 +152,7 @@ export class ProductListComponent implements AfterViewInit, OnDestroy {
    * Responsibility: Determine which page a product belongs to
    */
   private calculatePageFromIndex(index: number): number {
-    return Math.floor(index / this.limit) + 1;
+    return Math.floor(index / this.limit()) + 1;
   }
 
   /**
@@ -149,7 +160,7 @@ export class ProductListComponent implements AfterViewInit, OnDestroy {
    * Responsibility: Calculate starting index for pagination
    */
   private getFirstProductIndexOfPage(page: number): number {
-    return (page - 1) * this.limit;
+    return (page - 1) * this.limit();
   }
 
 
@@ -176,7 +187,7 @@ export class ProductListComponent implements AfterViewInit, OnDestroy {
       // If products not loaded yet, load them first
       // Note: Load from original products offset, not filtered offset
       const apiSkip = Math.min(firstProductIndex, this.products().length);
-      this.facade.loadProducts(this.limit, apiSkip, false);
+      this.facade.loadProducts(this.limit(), apiSkip, false);
       setTimeout(() => {
         document.getElementById(`product-${firstProductIndex}`)?.scrollIntoView({ behavior: 'smooth' });
       }, 500);
@@ -192,7 +203,7 @@ export class ProductListComponent implements AfterViewInit, OnDestroy {
     this.observer = new IntersectionObserver((entries) => {
       // Logic check: only load more if NOT searching
       if (entries[0].isIntersecting && !this.isLoading() && !this.hasReachedEnd() && !this.searchService.query()) {
-        this.facade.loadProducts(this.limit, this.products().length);
+        this.facade.loadProducts(this.limit(), this.products().length);
       }
     }, { rootMargin: '400px' });
     this.observer.observe(this.loadMoreTrigger.nativeElement);

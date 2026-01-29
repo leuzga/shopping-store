@@ -1,0 +1,61 @@
+@if (section(); as cat) {
+  <section class="category-section">
+    <!-- Category Header -->
+    <div class="category-header">
+      <div class="category-info">
+        <h2 class="category-title">{{ cat.categoryName }}</h2>
+        @if (cat.description) {
+          <p class="category-description">{{ cat.description }}</p>
+        }
+      </div>
+      <a [routerLink]="['/categories', cat.categorySlug]" class="view-all-link">
+        Ver toda la categoría →
+      </a>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-grid">
+      @for (product of cat.products; track product.id) {
+        <div class="product-card">
+          <!-- Product Image -->
+          <div class="product-image-wrapper">
+            <a [routerLink]="['/products', product.id]" class="product-image-link">
+              <img
+                [src]="product.image"
+                [alt]="product.title"
+                class="product-image"
+                loading="lazy" />
+            </a>
+            <div class="product-badge">
+              <span class="badge-text">{{ product.category }}</span>
+            </div>
+          </div>
+
+          <!-- Product Info -->
+          <div class="product-info">
+            <!-- Product Title -->
+            <a [routerLink]="['/products', product.id]" class="product-link">
+              <h3 class="product-title">{{ product.title }}</h3>
+            </a>
+
+            <!-- Rating -->
+            <div class="product-rating">
+              @for (star of [1, 2, 3, 4, 5]; track star) {
+                <span class="star" [class.filled]="star <= (product.rating.rate || 0)">★</span>
+              }
+              <span class="rating-value">({{ product.rating.rate | number: '1.1-1' }})</span>
+            </div>
+
+            <!-- Price -->
+            <div class="product-footer">
+              <span class="product-price">{{ product.price | currency }}</span>
+              <a [routerLink]="['/products', product.id]" class="product-view-btn">
+                Ver Detalles
+              </a>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+}
