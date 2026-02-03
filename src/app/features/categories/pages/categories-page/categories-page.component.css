@@ -3,8 +3,7 @@
  * CSS Grid con tamaños variables, colores pasteles, diseño responsivo
  */
 :host {
-  @apply block min-h-[calc(100vh-8rem)];
-  background: linear-gradient(135deg, rgba(255, 240, 245, 0.4) 0%, rgba(240, 248, 255, 0.3) 25%, rgba(240, 255, 240, 0.3) 50%, rgba(255, 250, 240, 0.4) 75%, rgba(245, 245, 220, 0.3) 100%);
+  @apply block min-h-[calc(100vh-8rem)] bg-base-100;
 }
 
 .categories-container {
@@ -101,9 +100,10 @@
   @apply w-full h-full object-cover transition-transform hover:scale-105;
 }
 
-/* Overlay for text contrast */
+/* Overlay for text contrast - only bottom half */
 .card-overlay {
-  @apply absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent;
+  @apply absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent;
+  height: 60%;
   z-index: 1;
 }
 
