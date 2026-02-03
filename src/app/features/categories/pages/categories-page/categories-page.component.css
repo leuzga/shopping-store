@@ -1,29 +1,122 @@
 /**
- * Responsabilidad única: Layout y fondo de página
- * Establece el alto mínimo y fondo personalizado
+ * Responsabilidad única: Masonry grid layout para categorías
+ * CSS Grid con tamaños variables, colores pasteles, diseño responsivo
  */
 :host {
-  @apply block min-h-[calc(100vh-8rem)] bg-base-100;
+  @apply block min-h-[calc(100vh-8rem)];
+  background: linear-gradient(135deg, rgba(255, 240, 245, 0.4) 0%, rgba(240, 248, 255, 0.3) 25%, rgba(240, 255, 240, 0.3) 50%, rgba(255, 250, 240, 0.4) 75%, rgba(245, 245, 220, 0.3) 100%);
 }
 
-/* Page content container with fade-in animation */
-div.min-h-screen {
+.categories-container {
+  @apply w-full px-4 md:px-8 py-8;
   opacity: 0;
-  animation: fadeIn 0.6s ease-in-out forwards;
+  transition: opacity 0.6s ease-in-out;
 }
 
-/* Apply fade-in animation when component is visible */
-div.fade-in {
-  animation: fadeIn 0.6s ease-in-out forwards;
+.categories-container.fade-in {
+  @apply opacity-100;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+.masonry-grid {
+  @apply grid gap-4 md:gap-6 auto-rows-max;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Responsive grid - Desktop (4 columns) */
+@media (min-width: 1024px) {
+  .masonry-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+}
+
+/* Tablet (2-3 columns) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .masonry-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/* Mobile (1 column) */
+@media (max-width: 767px) {
+  .masonry-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Disable size variations on mobile */
+  .masonry-card.col-span-2,
+  .masonry-card.row-span-2 {
+    @apply col-span-1 row-span-1;
+  }
+}
+
+/* Masonry card styling - Colorful pastel design */
+.masonry-card {
+  @apply relative overflow-hidden cursor-pointer transition-all hover:shadow-2xl hover:scale-105;
+  aspect-ratio: 1;
+  min-height: 200px;
+  background: linear-gradient(135deg, #FFE5E5 0%, #FFF0F0 100%);
+}
+
+/* Pastel color variations for random look */
+.masonry-card:nth-child(1) { background: linear-gradient(135deg, #FFE5E5 0%, #FFF0F0 100%); }
+.masonry-card:nth-child(2) { background: linear-gradient(135deg, #E5F5FF 0%, #F0FAFF 100%); }
+.masonry-card:nth-child(3) { background: linear-gradient(135deg, #E5FFE5 0%, #F0FFF0 100%); }
+.masonry-card:nth-child(4) { background: linear-gradient(135deg, #FFF5E5 0%, #FFFAF0 100%); }
+.masonry-card:nth-child(5) { background: linear-gradient(135deg, #F5E5FF 0%, #FAF0FF 100%); }
+.masonry-card:nth-child(6) { background: linear-gradient(135deg, #FFE5F5 0%, #FFF0FA 100%); }
+.masonry-card:nth-child(7) { background: linear-gradient(135deg, #E5FFFF 0%, #F0FFFF 100%); }
+.masonry-card:nth-child(8) { background: linear-gradient(135deg, #FFFFE5 0%, #FFFFF0 100%); }
+
+/* Large card (2x2) - Desktop only */
+.masonry-card.col-span-2.row-span-2 {
+  grid-column: span 2;
+  grid-row: span 2;
+  aspect-ratio: 1;
+  min-height: 400px;
+}
+
+/* Wide card (2x1) - Desktop only */
+.masonry-card.col-span-2:not(.row-span-2) {
+  grid-column: span 2;
+  aspect-ratio: 2;
+  min-height: 220px;
+}
+
+/* Tall card (1x2) - Desktop only */
+.masonry-card.col-span-1.row-span-2 {
+  grid-row: span 2;
+  aspect-ratio: 0.5;
+  min-height: 420px;
+}
+
+/* Card image - covers entire card */
+.card-image-wrapper {
+  @apply w-full h-full overflow-hidden;
+}
+
+.card-image {
+  @apply w-full h-full object-cover transition-transform hover:scale-105;
+}
+
+/* Overlay for text contrast */
+.card-overlay {
+  @apply absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent;
+  z-index: 1;
+}
+
+/* Card content - positioned at bottom */
+.card-content {
+  @apply absolute bottom-0 left-0 right-0 p-4 md:p-6 z-10;
+}
+
+.card-title {
+  @apply text-white font-bold text-lg md:text-xl leading-tight;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Empty state */
+.empty-state {
+  @apply flex flex-col items-center justify-center py-20 text-center text-base-content/60;
 }
