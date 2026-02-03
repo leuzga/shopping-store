@@ -47,7 +47,8 @@
   /* Disable size variations on mobile */
   .masonry-card.col-span-2,
   .masonry-card.row-span-2 {
-    @apply col-span-1 row-span-1;
+    grid-column: span 1 !important;
+    grid-row: span 1 !important;
   }
 }
 
