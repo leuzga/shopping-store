@@ -12,13 +12,25 @@
       </svg>
     </button>
 
-    <!-- Logo and Brand Name -->
-    <a routerLink="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity flex-shrink-0">
-      <!-- Logo Image -->
-      <img src="/logoSS.svg" alt="Shopping Store Logo" class="h-8 w-8 object-contain">
-      <span class="hidden md:inline text-lg lg:text-2xl font-semibold tracking-wide font-stint-ultra">Shopping
-        Store</span>
-    </a>
+    <!-- Logo and Brand Name with Dropdown -->
+    <div class="dropdown dropdown-hover dropdown-end h-full flex items-center">
+      <div tabindex="0" role="button"
+        class="flex items-center gap-2 hover:opacity-80 transition-opacity flex-shrink-0 cursor-pointer">
+        <img src="/logoSS.svg" alt="Shopping Store Logo" class="h-8 w-8 object-contain">
+        <span class="hidden md:inline text-lg lg:text-2xl font-semibold tracking-wide font-stint-ultra">Shopping
+          Store</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 hidden md:block opacity-60" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </div>
+      <ul tabindex="0"
+        class="dropdown-content z-[100] menu p-2 shadow bg-[#153550] text-white rounded-none border border-white/10 w-52 top-full">
+        <li><a routerLink="/" class="hover:bg-white/10 rounded-none">Home</a></li>
+        <li><a routerLink="/about-us" class="hover:bg-white/10 rounded-none">Sobre Nosotros</a></li>
+        <li><a routerLink="/contact-us" class="hover:bg-white/10 rounded-none">Contacto</a></li>
+      </ul>
+    </div>
   </div>
 
   <!-- Spacer - Pushes right section to the right on first line -->
@@ -99,15 +111,15 @@
           </div>
           }
         </button>
-        <ul class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-          <li><a routerLink="/profile">Perfil</a></li>
-          <li><a routerLink="/addresses">Direcciones</a></li>
-          <li><a routerLink="/orders">Pedidos</a></li>
-          <li><a routerLink="/favorites">Favoritos</a></li>
+        <ul class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-none w-52 border border-gray-100">
+          <li><a routerLink="/profile" class="rounded-none">Perfil</a></li>
+          <li><a routerLink="/addresses" class="rounded-none">Direcciones</a></li>
+          <li><a routerLink="/orders" class="rounded-none">Pedidos</a></li>
+          <li><a routerLink="/favorites" class="rounded-none">Favoritos</a></li>
           <!-- Separator line -->
           <li class="divider divider-logout my-1"></li>
           <li>
-            <button (click)="onLogout()" class="text-error w-full text-left" type="button">
+            <button (click)="onLogout()" class="text-error w-full text-left rounded-none" type="button">
               Cerrar Sesión
             </button>
           </li>
@@ -166,7 +178,7 @@
   <div class="absolute left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-base-100 shadow-lg overflow-y-auto z-50">
     <div class="p-4 space-y-2">
       <!-- Navigation Links -->
-      <a routerLink="/" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-base-200 transition-colors"
+      <a routerLink="/" class="flex items-center gap-3 px-4 py-3 rounded-none hover:bg-base-200 transition-colors"
         (click)="closeMobileMenu()">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -175,7 +187,8 @@
         <span>Home</span>
       </a>
 
-      <a routerLink="/products" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-base-200 transition-colors"
+      <a routerLink="/products"
+        class="flex items-center gap-3 px-4 py-3 rounded-none hover:bg-base-200 transition-colors"
         (click)="closeMobileMenu()">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -185,7 +198,7 @@
       </a>
 
       <a routerLink="/categories"
-        class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-base-200 transition-colors"
+        class="flex items-center gap-3 px-4 py-3 rounded-none hover:bg-base-200 transition-colors"
         (click)="closeMobileMenu()">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -194,7 +207,7 @@
         <span>Categorías</span>
       </a>
 
-      <a routerLink="/deals" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-base-200 transition-colors"
+      <a routerLink="/deals" class="flex items-center gap-3 px-4 py-3 rounded-none hover:bg-base-200 transition-colors"
         (click)="closeMobileMenu()">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -205,9 +218,32 @@
 
       <div class="divider my-2"></div>
 
+      <a routerLink="/about-us"
+        class="flex items-center gap-3 px-4 py-3 rounded-none hover:bg-base-200 transition-colors"
+        (click)="closeMobileMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>Sobre Nosotros</span>
+      </a>
+
+      <a routerLink="/contact-us"
+        class="flex items-center gap-3 px-4 py-3 rounded-none hover:bg-base-200 transition-colors"
+        (click)="closeMobileMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        <span>Contacto</span>
+      </a>
+
+      <div class="divider my-2"></div>
+
       <!-- Auth Section -->
       @if (isAuthenticated()) {
-      <a routerLink="/profile" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-base-200 transition-colors"
+      <a routerLink="/profile"
+        class="flex items-center gap-3 px-4 py-3 rounded-none hover:bg-base-200 transition-colors"
         (click)="closeMobileMenu()">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -217,7 +253,7 @@
       </a>
 
       <a routerLink="/addresses"
-        class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-base-200 transition-colors"
+        class="flex items-center gap-3 px-4 py-3 rounded-none hover:bg-base-200 transition-colors"
         (click)="closeMobileMenu()">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -228,7 +264,7 @@
       </a>
 
       <button (click)="onLogout()"
-        class="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-base-200 transition-colors text-error">
+        class="w-full flex items-center gap-3 px-4 py-3 rounded-none hover:bg-base-200 transition-colors text-error">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

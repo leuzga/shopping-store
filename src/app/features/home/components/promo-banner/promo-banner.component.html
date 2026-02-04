@@ -1,15 +1,15 @@
 @if (banner(); as promo) {
   <div class="promo-banner-wrapper" [class]="'layout-' + promo.layout">
-    <div class="promo-banner" [style.backgroundColor]="promo.backgroundColor">
+    <div class="promo-banner" [style.backgroundColor]="promo.backgroundColor" [class.gradient-radial]="promo.backgroundColor === '#E91E63'" [class.gradient-radial-wine]="promo.backgroundColor === '#8B3A4B'">
       <!-- Content Section -->
       <div class="promo-content">
         <h2 class="promo-title">{{ promo.title }}</h2>
         @if (promo.subtitle) {
           <p class="promo-subtitle">{{ promo.subtitle }}</p>
         }
-        <a [href]="promo.ctaLink" class="promo-button">
+        <button (click)="onCtaClick()" class="promo-button" type="button">
           {{ promo.cta }}
-        </a>
+        </button>
       </div>
 
       <!-- Image Section -->

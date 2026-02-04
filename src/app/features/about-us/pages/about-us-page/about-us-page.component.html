@@ -1,0 +1,93 @@
+<div class="about-us-container">
+  <!-- Hero Section -->
+  <section class="hero-section min-h-[60vh] flex flex-col md:flex-row items-center gap-12 px-6 lg:px-24">
+    <div class="flex-1 space-y-6">
+      <h2 class="text-teal-600 font-semibold uppercase tracking-widest">{{ labels().hero.subtitle }}</h2>
+      <h1 class="text-5xl lg:text-7xl font-bold leading-tight text-gray-900">
+        {{ labels().hero.title }}
+      </h1>
+      <p class="text-xl text-gray-600 leading-relaxed max-w-2xl">
+        {{ labels().hero.description }}
+      </p>
+      <div class="flex gap-4 pt-4">
+        <button class="btn btn-primary btn-lg rounded-none px-8" routerLink="/">Explorar Tienda</button>
+        <button class="btn btn-outline btn-lg rounded-none px-8" routerLink="/contact-us">Contáctanos</button>
+      </div>
+    </div>
+    <div class="flex-1 relative">
+      <div
+        class="image-wrapper rounded-none overflow-hidden shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-500">
+        <img [src]="heroImage" alt="Shopping Store Hero" class="w-full h-auto object-cover">
+      </div>
+      <!-- Decorative Elements -->
+      <div
+        class="absolute -bottom-6 -left-6 w-32 h-32 bg-teal-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+      </div>
+      <div
+        class="absolute -top-6 -right-6 w-32 h-32 bg-yellow-100 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
+      </div>
+    </div>
+  </section>
+
+  <!-- Objectives Section -->
+  <section class="bg-gray-50 py-24 px-6 lg:px-24">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold mb-4">{{ labels().objectives.title }}</h2>
+      <div class="w-24 h-1 bg-teal-500 mx-auto"></div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      @for (item of labels().objectives.items; track item.title) {
+      <div class="card bg-white p-8 border-t-4 border-teal-500 shadow-sm hover:shadow-xl transition-all duration-300">
+        <h3 class="text-xl font-bold mb-4 text-teal-700">{{ item.title }}</h3>
+        <p class="text-gray-600 leading-relaxed">{{ item.description }}</p>
+      </div>
+      }
+    </div>
+  </section>
+
+  <!-- Experience & Best Retail Section -->
+  <section class="py-24 px-6 lg:px-24 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+    <div class="space-y-12">
+      <div class="experience-content">
+        <h2 class="text-3xl font-bold mb-6 flex items-center gap-3">
+          <span class="text-teal-500 text-4xl">20+</span>
+          {{ labels().experience.title }}
+        </h2>
+        <p class="text-lg text-gray-600 leading-loose">
+          {{ labels().experience.description }}
+        </p>
+      </div>
+
+      <div class="best-retail-content p-8 bg-[#153550] text-white rounded-none relative overflow-hidden group">
+        <div
+          class="absolute inset-0 bg-white/10 transform -skew-x-12 translate-x-full group-hover:translate-x-[-150%] transition-transform duration-1000">
+        </div>
+        <h3 class="text-2xl font-bold mb-4">{{ labels().bestRetail.title }}</h3>
+        <p class="text-teal-50 leading-relaxed">
+          {{ labels().bestRetail.description }}
+        </p>
+      </div>
+    </div>
+
+    <div class="relative grid grid-cols-2 gap-4">
+      <div class="space-y-4">
+        <div class="h-64 bg-teal-100 rounded-none animate-pulse"></div>
+        <div class="h-48 bg-gray-200 rounded-none"></div>
+      </div>
+      <div class="space-y-4 pt-12">
+        <div class="h-48 bg-gray-200 rounded-none"></div>
+        <div class="h-64 bg-yellow-50 rounded-none animate-pulse"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-24 px-6 lg:px-24 flex justify-center">
+    <div class="max-w-4xl w-full text-center bg-[#153550] text-white p-16 rounded-none space-y-8">
+      <h2 class="text-4xl lg:text-5xl font-bold">¿Listo para una experiencia de calidad?</h2>
+      <p class="text-xl text-gray-400">Únete a los miles de clientes que confían en Shopping Store cada día.</p>
+      <button class="btn btn-primary btn-xl rounded-none px-12 text-lg" routerLink="/products">Empezar a
+        Comprar</button>
+    </div>
+  </section>
+</div>

@@ -60,6 +60,14 @@
           <span class="shipping-text">{{ messages.DESCRIPTIONS.FREE_SHIPPING }}</span>
         </div>
 
+        <!-- Total Discount (if any) -->
+        @if (getTotalDiscount() > 0) {
+          <div class="total-discount-row">
+            <span class="discount-label">Ahorro Total:</span>
+            <span class="discount-amount">{{ getTotalDiscount() | currency }}</span>
+          </div>
+        }
+
         <!-- Total -->
         <div class="total-row">
           <span class="total-label">{{ messages.LABELS.TOTAL }}:</span>

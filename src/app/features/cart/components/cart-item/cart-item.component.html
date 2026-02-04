@@ -7,7 +7,16 @@
   <!-- Item Details -->
   <div class="item-details">
     <h3 class="item-title">{{ item().title }}</h3>
-    <p class="item-price">{{ item().price | currency }}</p>
+    <!-- Show price with or without discount -->
+    @if ((item().discountPercentage ?? 0) > 0) {
+      <div class="price-with-discount">
+        <p class="original-price">{{ item().price | currency }}</p>
+        <span class="discount-badge-small">{{ (item().discountPercentage ?? 0) | number:'1.0-0' }}%</span>
+        <p class="item-price-discounted">{{ getDiscountedPrice(item()) | currency }}</p>
+      </div>
+    } @else {
+      <p class="item-price">{{ item().price | currency }}</p>
+    }
   </div>
 
   <!-- Quantity Controls -->
@@ -28,8 +37,8 @@
   </div>
 
   <!-- Subtotal -->
-  <div class="item-subtotal">
-    {{ (item().price * item().quantity) | currency }}
+  <div class="item-subtotal" [class.discounted]="(item().discountPercentage ?? 0) > 0">
+    {{ (getDiscountedPrice(item()) * item().quantity) | currency }}
   </div>
 
   <!-- Remove Button -->

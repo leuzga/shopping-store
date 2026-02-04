@@ -1,0 +1,22 @@
+<div [ngClass]="alertClass()" role="alert" class="shadow-lg overflow-hidden">
+  <div class="flex items-start gap-2 p-4">
+    <!-- Icono sanitizado y reactivo -->
+    <div class="flex-shrink-0 inline-flex items-center justify-center" [innerHTML]="iconSvg()"></div>
+    <div class="flex-1">
+      <p class="text-sm font-medium" [ngClass]="textClass()">{{ message() }}</p>
+    </div>
+    <button
+      (click)="handleDismiss()"
+      class="flex-shrink-0 font-bold transition-opacity hover:opacity-70 text-white"
+      [ngClass]="getToastType() === 'info' ? '' : textClass()"
+      aria-label="Cerrar notificación">
+      ✕
+    </button>
+  </div>
+  <!-- Progress bar -->
+  <div
+    class="h-1"
+    [ngClass]="getToastType() === 'info' ? 'bg-white' : 'bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400'"
+    [style.width.%]="progressWidth()">
+  </div>
+</div>

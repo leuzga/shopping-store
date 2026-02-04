@@ -10,6 +10,7 @@ export interface CartItem {
   readonly price: number;
   readonly quantity: number;
   readonly image: string;
+  readonly discountPercentage?: number;
 }
 
 /**

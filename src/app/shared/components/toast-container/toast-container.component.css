@@ -1,0 +1,7 @@
+/* Posicionamiento y espaciado del contenedor */
+:host {
+  display: contents;
+}
+
+/* El div con posición fixed está en el template */
+/* space-y-3 de Tailwind proporciona el espaciado entre toasts */

@@ -1,33 +1,105 @@
-<div class="min-h-screen flex flex-col items-center justify-center gap-8 px-4"
-  [class.fade-in]="isVisible">
-  <div class="text-center space-y-4">
-    <h1 class="text-5xl md:text-6xl font-bold text-primary">📂 Categories Page</h1>
-    <p class="text-xl md:text-2xl text-base-content/70">
-      Browse our product categories
-    </p>
+<div class="categories-container" [class.fade-in]="isVisible()">
+  <div class="masonry-grid">
+    @for (category of categorySections(); track category.categorySlug) {
+      @switch (getCardSize(category.categorySlug)) {
+        @case (0) {
+          <!-- Wide (aspect 1.2-1.4): 2x1 for tablets, shirts, shoes, anteojos, etc. -->
+          <div
+            class="masonry-card col-span-2"
+            (click)="navigateToCategory(category.categorySlug, category.categoryName)">
+            <div class="card-image-wrapper">
+              <img
+                [src]="getCategoryImage(category.categorySlug)"
+                [alt]="category.categoryName"
+                [attr.data-category]="category.categorySlug"
+                class="card-image">
+            </div>
+            <div class="card-overlay"></div>
+            <div class="card-content">
+              <h3 class="card-title">{{ category.categoryName }}</h3>
+            </div>
+          </div>
+        }
+        @case (1) {
+          <!-- Square (aspect 0.9-1.2): 1x1 for watches, jewelry, bags, etc. -->
+          <div
+            class="masonry-card col-span-1"
+            (click)="navigateToCategory(category.categorySlug, category.categoryName)">
+            <div class="card-image-wrapper">
+              <img
+                [src]="getCategoryImage(category.categorySlug)"
+                [alt]="category.categoryName"
+                [attr.data-category]="category.categorySlug"
+                class="card-image">
+            </div>
+            <div class="card-overlay"></div>
+            <div class="card-content">
+              <h3 class="card-title">{{ category.categoryName }}</h3>
+            </div>
+          </div>
+        }
+        @case (2) {
+          <!-- Tall (aspect < 0.9): 1x2 for dresses, phones, vertical items -->
+          <div
+            class="masonry-card col-span-1 row-span-2"
+            (click)="navigateToCategory(category.categorySlug, category.categoryName)">
+            <div class="card-image-wrapper">
+              <img
+                [src]="getCategoryImage(category.categorySlug)"
+                [alt]="category.categoryName"
+                [attr.data-category]="category.categorySlug"
+                class="card-image">
+            </div>
+            <div class="card-overlay"></div>
+            <div class="card-content">
+              <h3 class="card-title">{{ category.categoryName }}</h3>
+            </div>
+          </div>
+        }
+        @case (3) {
+          <!-- Extra Wide (aspect > 1.4): 2x2 for laptops, beds, motorcycles, etc. -->
+          <div
+            class="masonry-card col-span-2 row-span-2"
+            (click)="navigateToCategory(category.categorySlug, category.categoryName)">
+            <div class="card-image-wrapper">
+              <img
+                [src]="getCategoryImage(category.categorySlug)"
+                [alt]="category.categoryName"
+                [attr.data-category]="category.categorySlug"
+                class="card-image">
+            </div>
+            <div class="card-overlay"></div>
+            <div class="card-content">
+              <h3 class="card-title">{{ category.categoryName }}</h3>
+            </div>
+          </div>
+        }
+        @default {
+          <!-- Fallback: 1x1 square (aspect ratio detection default) -->
+          <div
+            class="masonry-card col-span-1"
+            (click)="navigateToCategory(category.categorySlug, category.categoryName)">
+            <div class="card-image-wrapper">
+              <img
+                [src]="getCategoryImage(category.categorySlug)"
+                [alt]="category.categoryName"
+                [attr.data-category]="category.categorySlug"
+                class="card-image">
+            </div>
+            <div class="card-overlay"></div>
+            <div class="card-content">
+              <h3 class="card-title">{{ category.categoryName }}</h3>
+            </div>
+          </div>
+        }
+      }
+    }
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mt-8">
-    <div class="card bg-base-100 shadow-lg">
-      <div class="card-body text-center">
-        <h2 class="card-title justify-center text-2xl">📱 Electronics</h2>
-        <p>Latest gadgets and devices</p>
-        <div class="card-actions justify-center mt-4">
-          <a routerLink="/products" class="btn btn-secondary">Browse</a>
-        </div>
-      </div>
+  <!-- Empty state -->
+  @if (categorySections().length === 0) {
+    <div class="empty-state">
+      <p>No categories available</p>
     </div>
-
-    <div class="card bg-base-100 shadow-lg">
-      <div class="card-body text-center">
-        <h2 class="card-title justify-center text-2xl">👗 Fashion</h2>
-        <p>Trendy clothing and accessories</p>
-        <div class="card-actions justify-center mt-4">
-          <a routerLink="/products" class="btn btn-secondary">Browse</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <a routerLink="/" class="btn btn-outline mt-8">Back to Home</a>
+  }
 </div>

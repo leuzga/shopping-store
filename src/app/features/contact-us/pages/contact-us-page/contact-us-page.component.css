@@ -1,0 +1,43 @@
+.contact-us-container {
+  @apply bg-white min-h-screen;
+  margin-top: -4rem;
+}
+
+@media (min-width: 768px) {
+  .contact-us-container {
+    margin-top: -50px;
+    /* Precise offset for md header */
+    margin-top: -5rem;
+  }
+}
+
+.hero-section {
+  @apply relative overflow-hidden pt-32 pb-24;
+}
+
+.input,
+.textarea {
+  @apply border-2 transition-all duration-300;
+}
+
+.input:focus,
+.textarea:focus {
+  @apply border-teal-500 shadow-none;
+}
+
+.btn-primary {
+  @apply transition-all duration-300 shadow-lg hover:shadow-xl;
+}
+
+/* Ensure all key elements have square corners */
+.input,
+.textarea,
+.btn,
+.card {
+  @apply rounded-none !important;
+}
+
+/* Specific overrides if needed */
+.hero-section h1 {
+  @apply tracking-tighter;
+}

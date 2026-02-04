@@ -5,7 +5,9 @@
     class="swiper-carousel"
     [attr.speed]="1000"
     [attr.autoplay-delay]="3500"
+    [attr.autoplay]="true"
     [attr.loop]="true"
+    [attr.loop-add-blank-slides]="true"
     [attr.grab-cursor]="true"
     (swiperslidechange)="onSlideChange($event)">
     @for (item of items(); track item.id; let index = $index) {
@@ -31,6 +33,14 @@
               {{ item.cta }}
             </button>
           </div>
+
+          <!-- Discount Badge (visible only when discount exists) -->
+          @if (item.discount && item.discount > 0) {
+            <div class="discount-badge">
+              <div class="discount-percentage">{{ item.discount | number:'1.0-0' }}%</div>
+              <div class="discount-label">OFF</div>
+            </div>
+          }
         </div>
       </swiper-slide>
     }

@@ -1,6 +1,7 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, effect, inject } from '@angular/core';
 import { CategorySection } from '../components/category-section/category-section.component';
 import { PromoBanner } from '../components/promo-banner/promo-banner.component';
+import { ProductService } from '@features/products/services/product.service';
 
 /**
  * Extended CarouselItem with category filter support
@@ -13,6 +14,9 @@ export interface CarouselItem {
   cta: string;
   ctaLink: string;
   categories?: string[];
+  discount?: number;
+  productId?: number;
+  backState?: { returnTo: string; fragment?: string; label?: string };
 }
 
 /**
@@ -32,6 +36,94 @@ export interface CarouselItem {
   providedIn: 'root',
 })
 export class HomeDataService {
+  private readonly productService = inject(ProductService);
+
+  // Category Sections - Loaded dynamically from API
+  readonly categorySections = signal<CategorySection[]>([]);
+  readonly isLoadingCategories = signal(false);
+
+  // Trigger signal for initialization
+  private readonly initTrigger = signal(true);
+
+  constructor() {
+    // Load categories reactively using effect
+    effect(() => {
+      if (this.initTrigger()) {
+        this.loadCategories();
+      }
+    }, { allowSignalWrites: true });
+  }
+
+  /**
+   * Load ALL categories from DummyJSON API - Pure function
+   * Handles RxJS subscriptions and state updates reactively
+   */
+  private loadCategories(): void {
+    this.isLoadingCategories.set(true);
+
+    this.productService.getCategories().subscribe({
+      next: (categories) => {
+        if (!categories || categories.length === 0) {
+          console.warn('[HomeDataService] No categories found from API');
+          this.isLoadingCategories.set(false);
+          return;
+        }
+
+        this.processCategoriesData(categories);
+      },
+      error: (error) => {
+        console.error('[HomeDataService] Error loading categories', error);
+        this.isLoadingCategories.set(false);
+      }
+    });
+  }
+
+  /**
+   * Process categories data and fetch products for each category
+   * Pure function: transforms API data into CategorySections
+   */
+  private processCategoriesData(categories: string[]): void {
+    const categorySections: CategorySection[] = [];
+    let categoryId = 1;
+    let loadedCount = 0;
+
+    categories.forEach((categorySlug) => {
+      this.productService.getProductsByCategory(categorySlug, 4, 0).subscribe({
+        next: (result) => {
+          if (result?.products && result.products.length > 0) {
+            const categoryName = this.formatCategoryName(categorySlug);
+
+            categorySections.push({
+              id: categoryId++,
+              categoryName: categoryName,
+              categorySlug: categorySlug,
+              description: `Explora nuestra colección de ${categoryName.toLowerCase()}`,
+              products: result.products
+            });
+          }
+
+          loadedCount++;
+
+          // Update signal when all categories are loaded
+          if (loadedCount === categories.length) {
+            this.categorySections.set(categorySections);
+            console.log(`[HomeDataService] Loaded ${categorySections.length} categories from API`);
+            this.isLoadingCategories.set(false);
+          }
+        },
+        error: (error) => {
+          console.warn(`[HomeDataService] Error loading category: ${categorySlug}`, error);
+          loadedCount++;
+
+          if (loadedCount === categories.length) {
+            this.categorySections.set(categorySections);
+            this.isLoadingCategories.set(false);
+          }
+        }
+      });
+    });
+  }
+
   // Carousel Items
   readonly carouselItems = signal<CarouselItem[]>([
     {
@@ -74,129 +166,17 @@ export class HomeDataService {
     },
   ]);
 
-  // Category Sections
-  readonly categorySections = signal<CategorySection[]>([
-    {
-      id: 1,
-      categoryName: 'Electrónica',
-      categorySlug: 'electronics',
-      description: 'Última tecnología en dispositivos electrónicos',
-      products: [
-        {
-          id: 6,
-          title: 'Wireless Headphones',
-          price: 99.99,
-          image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&q=80',
-          rating: { rate: 4.3, count: 250 },
-          category: 'electronics',
-        },
-        {
-          id: 8,
-          title: 'Tablet',
-          price: 299.99,
-          image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=300&q=80',
-          rating: { rate: 4.5, count: 320 },
-          category: 'electronics',
-        },
-        {
-          id: 9,
-          title: 'Smartphone',
-          price: 699.99,
-          image: 'https://images.unsplash.com/photo-1511707267537-b85faf00021e?w=300&q=80',
-          rating: { rate: 4.8, count: 500 },
-          category: 'electronics',
-        },
-        {
-          id: 10,
-          title: 'Smartwatch',
-          price: 199.99,
-          image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&q=80',
-          rating: { rate: 4.4, count: 180 },
-          category: 'electronics',
-        },
-      ],
-    },
-    {
-      id: 2,
-      categoryName: 'Belleza',
-      categorySlug: 'beauty',
-      description: 'Productos de belleza y cuidado personal',
-      products: [
-        {
-          id: 1,
-          title: 'Essence Mascara Lash Princess',
-          price: 9.99,
-          image: 'https://images.unsplash.com/photo-1606611013016-969c19d14ce1?w=300&q=80',
-          rating: { rate: 4.5, count: 450 },
-          category: 'beauty',
-        },
-        {
-          id: 2,
-          title: 'Red Lipstick',
-          price: 12.99,
-          image: 'https://images.unsplash.com/photo-1586894797929-aef4fef381b1?w=300&q=80',
-          rating: { rate: 4.2, count: 380 },
-          category: 'beauty',
-        },
-        {
-          id: 3,
-          title: 'Eye Shadow Palette',
-          price: 34.99,
-          image: 'https://images.unsplash.com/photo-1511214314862-34bbafe34edd?w=300&q=80',
-          rating: { rate: 4.6, count: 520 },
-          category: 'beauty',
-        },
-        {
-          id: 4,
-          title: 'Face Cleanser',
-          price: 15.99,
-          image: 'https://images.unsplash.com/photo-1596573514060-59ec9bdabe49?w=300&q=80',
-          rating: { rate: 4.3, count: 290 },
-          category: 'beauty',
-        },
-      ],
-    },
-    {
-      id: 3,
-      categoryName: 'Moda',
-      categorySlug: 'clothing',
-      description: 'Ropa y accesorios de moda',
-      products: [
-        {
-          id: 11,
-          title: 'Slim Fit Jeans',
-          price: 49.99,
-          image: 'https://images.unsplash.com/photo-1542821956-1c4d760501a2?w=300&q=80',
-          rating: { rate: 4.4, count: 380 },
-          category: 'clothing',
-        },
-        {
-          id: 12,
-          title: 'T-Shirt',
-          price: 19.99,
-          image: 'https://images.unsplash.com/photo-1488554896566-007d1d784e3e?w=300&q=80',
-          rating: { rate: 4.1, count: 200 },
-          category: 'clothing',
-        },
-        {
-          id: 13,
-          title: 'Hoodie',
-          price: 59.99,
-          image: 'https://images.unsplash.com/photo-1556994740432-5c8dc1f9de13?w=300&q=80',
-          rating: { rate: 4.5, count: 320 },
-          category: 'clothing',
-        },
-        {
-          id: 14,
-          title: 'Casual Shoes',
-          price: 79.99,
-          image: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=300&q=80',
-          rating: { rate: 4.3, count: 280 },
-          category: 'clothing',
-        },
-      ],
-    },
-  ]);
+
+  /**
+   * Format category slug to display name
+   * Pure function: converts kebab-case to Title Case
+   */
+  private formatCategoryName(slug: string): string {
+    return slug
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
 
   // Promotional Banners
   readonly promoBanners = signal<PromoBanner[]>([
@@ -204,7 +184,7 @@ export class HomeDataService {
       id: 1,
       title: 'Descuento Especial 50%',
       subtitle: 'En productos seleccionados de belleza',
-      image: 'https://images.unsplash.com/photo-1596462502278-af96a14a730d?w=500&q=80',
+      image: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500&q=80',
       backgroundColor: '#E91E63',
       cta: 'Comprar Ahora',
       ctaLink: '/products',
@@ -214,15 +194,14 @@ export class HomeDataService {
       id: 2,
       title: 'Nueva Colección 2024',
       subtitle: 'Moda exclusiva disponible ahora',
-      image: 'https://images.unsplash.com/photo-1445205170230-053b3aff42d5?w=500&q=80',
-      backgroundColor: '#2196F3',
+      image: 'https://images.pexels.com/photos/3622619/pexels-photo-3622619.jpeg',
+      backgroundColor: '#8B3A4B',
       cta: 'Ver Colección',
       ctaLink: '/categories/clothing',
       layout: 'left',
     },
   ]);
 
-  constructor() {}
 
   /**
    * Get carousel items
@@ -243,5 +222,20 @@ export class HomeDataService {
    */
   getPromoBanners() {
     return this.promoBanners();
+  }
+
+  /**
+   * Get carousel categories by category slug
+   * Maps category section slugs to their corresponding carousel item categories
+   */
+  getCategoriesBySlug(slug: string): string[] {
+    const item = this.carouselItems().find((item, index) => {
+      // Map carousel item index to category slug
+      if (index === 0) return slug === 'electronics';
+      if (index === 1) return slug === 'beauty';
+      if (index === 2) return slug === 'clothing';
+      return false;
+    });
+    return item?.categories || [];
   }
 }

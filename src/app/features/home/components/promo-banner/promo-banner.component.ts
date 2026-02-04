@@ -1,5 +1,6 @@
-import { Component, input } from '@angular/core';
+import { Component, input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 export interface PromoBanner {
   id: number;
@@ -26,6 +27,7 @@ export interface PromoBanner {
  * - Multiple layout options
  * - Custom background styling
  * - Mobile-optimized display
+ * - Navigation to deals/offers page
  */
 @Component({
   selector: 'app-promo-banner',
@@ -36,4 +38,13 @@ export interface PromoBanner {
 })
 export class PromoBannerComponent {
   readonly banner = input<PromoBanner | null>(null);
+  private readonly router = inject(Router);
+
+  /**
+   * Event handler: Navigate to promotional deals/offers page
+   * Routes to /deals path for special offers and discounts
+   */
+  onCtaClick(): void {
+    this.router.navigate(['/deals']);
+  }
 }

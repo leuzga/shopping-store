@@ -22,6 +22,28 @@
   @apply text-xs text-base-content/60 mt-1;
 }
 
+/* Price with discount styling */
+.price-with-discount {
+  @apply flex flex-col gap-1 mt-1;
+}
+
+.original-price {
+  @apply text-xs text-base-content/50 line-through m-0;
+}
+
+.discount-badge-small {
+  @apply inline-block w-fit px-2 py-0.5 bg-error/20 text-error font-bold text-xs rounded;
+}
+
+.item-price-discounted {
+  @apply text-sm font-bold text-success m-0;
+}
+
+/* Discounted subtotal styling */
+.item-subtotal.discounted {
+  @apply text-success;
+}
+
 .quantity-controls {
   @apply flex items-center gap-2 bg-base-100 rounded-lg p-1 border border-base-300;
 }

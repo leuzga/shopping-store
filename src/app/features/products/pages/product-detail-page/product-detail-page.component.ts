@@ -4,7 +4,6 @@ import {
   signal,
   computed,
   effect,
-  OnInit,
 } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { Router, ActivatedRoute, RouterLink } from '@angular/router';
@@ -16,8 +15,8 @@ import { Product } from '@core/models';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '@features/cart/services/cart.service';
 import { WishlistService } from '../../services/wishlist.service';
-import { AuthService } from '@core/services/auth.service';
-import { PRODUCT_MESSAGES } from '@core/constants';
+import { AuthService, NotificationService } from '@core/services';
+import { PRODUCT_MESSAGES, NOTIFICATION_MESSAGES, COMMON_MESSAGES } from '@core/constants';
 
 import { ProductGalleryComponent } from '../../components/product-gallery/product-gallery.component';
 
@@ -39,6 +38,12 @@ import { ProductGalleryComponent } from '../../components/product-gallery/produc
  * - Add to favorites with auth check
  * - Back navigation with fallback
  */
+export interface BackState {
+  returnTo: string;
+  fragment?: string;
+  label?: string;
+}
+
 @Component({
   selector: 'app-product-detail-page',
   standalone: true,
@@ -46,18 +51,21 @@ import { ProductGalleryComponent } from '../../components/product-gallery/produc
   templateUrl: './product-detail-page.component.html',
   styleUrl: './product-detail-page.component.css',
 })
-export class ProductDetailPageComponent implements OnInit {
+export class ProductDetailPageComponent {
   // Services Injection
   private readonly productService = inject(ProductService);
   private readonly cartService = inject(CartService);
   private readonly wishlistService = inject(WishlistService);
   private readonly authService = inject(AuthService);
+  private readonly notificationService = inject(NotificationService);
   private readonly router = inject(Router);
   private readonly location = inject(Location);
   private readonly route = inject(ActivatedRoute);
 
   // Constants
   readonly messages = PRODUCT_MESSAGES;
+  readonly commonMessages = COMMON_MESSAGES;
+  readonly notificationMessages = NOTIFICATION_MESSAGES;
 
   // ============================================================================
   // Signal-Based State Management
@@ -98,6 +106,18 @@ export class ProductDetailPageComponent implements OnInit {
    * Error state for display
    */
   readonly error = signal<string | null>(null);
+
+  /**
+   * Discount percentage from deals page (via router state)
+   * Optional: only populated when navigating from deals carousel
+   */
+  readonly discount = signal<number | null>(null);
+
+  /**
+   * Dynamic back navigation state
+   * Allows overriding the default back behavior (e.g. return to specific section)
+   */
+  readonly backState = signal<BackState | null>(null);
 
   // ============================================================================
   // Computed Signals (Derived State)
@@ -154,6 +174,19 @@ export class ProductDetailPageComponent implements OnInit {
    */
   readonly canDecrement = computed(() => this.quantity() > 1);
 
+  /**
+   * Calculated discounted price when discount exists (from deals page)
+   * Returns null if no discount
+   */
+  readonly discountedPrice = computed(() => {
+    const product = this.product();
+    const discount = this.discount();
+
+    if (!product || !discount || discount <= 0) return null;
+
+    return product.price * (1 - discount / 100);
+  });
+
   // ============================================================================
   // Lifecycle & Effects
   // ============================================================================
@@ -174,10 +207,19 @@ export class ProductDetailPageComponent implements OnInit {
         this.quantity.set(1);
       }
     });
-  }
 
-  ngOnInit(): void {
-    // Lifecycle hook for any additional initialization if needed
+    // Capture discount and backState from router state
+    const navigation = this.router.getCurrentNavigation();
+    if (navigation?.extras?.state) {
+      if (navigation.extras.state['discountPercentage']) {
+        this.discount.set(navigation.extras.state['discountPercentage']);
+      }
+
+      const backStateFromState = navigation.extras.state['backState'];
+      if (backStateFromState) {
+        this.backState.set(backStateFromState);
+      }
+    }
   }
 
   // ============================================================================
@@ -213,20 +255,26 @@ export class ProductDetailPageComponent implements OnInit {
   /**
    * Add product to cart with selected quantity
    * Respects existing cart item quantities (service handles merge)
+   * Includes discount if coming from deals page
+   * Muestra notificación de éxito
    */
   onAddToCart(): void {
     const product = this.product();
     const qty = this.quantity();
+    const discountPercentage = this.discount();
 
     if (!product) return;
 
-    this.cartService.addToCart(product, qty);
-    // Could add success toast/notification here
+    this.cartService.addToCart(product, qty, discountPercentage ?? undefined);
+    this.notificationService.showSuccess(
+      this.notificationMessages.CART.ADD_SUCCESS
+    );
   }
 
   /**
    * Toggle product in wishlist
    * Redirects to login if not authenticated
+   * Muestra notificación de agregado/removido
    */
   onToggleFavorite(): void {
     const productId = this.product()?.id;
@@ -240,14 +288,38 @@ export class ProductDetailPageComponent implements OnInit {
       return;
     }
 
+    // Captura el estado actual antes de hacer toggle
+    const isFavorite = this.isFavorite();
+
+    // Realiza el toggle
     this.wishlistService.toggleFavorite(productId);
+
+    // Muestra notificación según la acción realizada
+    if (!isFavorite) {
+      this.notificationService.showSuccess(
+        this.notificationMessages.WISHLIST.ADD_SUCCESS
+      );
+    } else {
+      this.notificationService.showSuccess(
+        this.notificationMessages.WISHLIST.REMOVE_SUCCESS
+      );
+    }
   }
 
   /**
    * Navigate back to product list
-   * Uses browser history, fallback to /products if no history
+   * Uses dynamic back state if available, then browser history, then fallback
    */
   goBack(): void {
+    const customBack = this.backState();
+
+    if (customBack) {
+      this.router.navigate([customBack.returnTo], {
+        fragment: customBack.fragment
+      });
+      return;
+    }
+
     if (window.history.length > 1) {
       this.location.back();
     } else {

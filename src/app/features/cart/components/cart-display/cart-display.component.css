@@ -79,6 +79,19 @@
   @apply text-xs font-bold text-success;
 }
 
+/* Total Discount row */
+.total-discount-row {
+  @apply flex justify-between items-center py-2 px-3 rounded-lg bg-warning/10 border border-warning/20;
+}
+
+.discount-label {
+  @apply text-sm font-bold text-warning;
+}
+
+.discount-amount {
+  @apply text-lg font-black text-warning;
+}
+
 /* Total row */
 .total-row {
   @apply flex justify-between items-center pt-2;

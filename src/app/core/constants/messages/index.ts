@@ -11,3 +11,4 @@ export * from './user.messages';
 export * from './product.messages';
 export * from './common.messages';
 export * from './cart.messages';
+export * from './notification.messages';

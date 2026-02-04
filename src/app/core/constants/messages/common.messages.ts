@@ -13,6 +13,8 @@ export const COMMON_MESSAGES = {
     DELETE: 'Eliminar',
     CONFIRM: 'Confirmar',
     CLOSE: 'Cerrar',
+    BACK: 'Volver',
+    BACK_TO_LIST: 'Volver a la lista',
     LOADING: 'Cargando...',
     RETRY: 'Reintentar'
   },

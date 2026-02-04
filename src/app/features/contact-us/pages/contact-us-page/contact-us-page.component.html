@@ -1,0 +1,93 @@
+<div class="contact-us-container">
+  <!-- Hero Section -->
+  <section class="hero-section bg-[#153550] text-white py-24 px-6 lg:px-24 text-center">
+    <h1 class="text-5xl lg:text-7xl font-bold mb-6">{{ labels().hero.title }}</h1>
+    <p class="text-xl text-teal-100/80 max-w-2xl mx-auto">{{ labels().hero.subtitle }}</p>
+  </section>
+
+  <section class="max-w-7xl mx-auto py-24 px-6 lg:px-24 grid grid-cols-1 lg:grid-cols-2 gap-16">
+    <!-- Contact Info -->
+    <div class="space-y-12">
+      <div>
+        <h2 class="text-3xl font-bold mb-6">{{ labels().info.title }}</h2>
+        <p class="text-lg text-gray-600 leading-relaxed">
+          {{ labels().info.description }}
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        <div class="flex items-start gap-4">
+          <div class="bg-teal-100 p-3 text-teal-700">
+            <span class="text-xl">📍</span>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-900">Ubicación</h4>
+            <p class="text-gray-600">{{ labels().info.address }}</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="bg-teal-100 p-3 text-teal-700">
+            <span class="text-xl">✉️</span>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-900">Email</h4>
+            <p class="text-gray-600">{{ labels().info.email }}</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <div class="bg-teal-100 p-3 text-teal-700">
+            <span class="text-xl">📞</span>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-900">Teléfono</h4>
+            <p class="text-gray-600">{{ labels().info.phone }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Form -->
+    <div class="bg-white border-4 border-gray-100 p-8 lg:p-12 shadow-sm">
+      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text font-bold text-gray-700">{{ labels().form.name }}</span>
+          </label>
+          <input type="text" formControlName="name" [placeholder]="labels().form.placeholderName"
+            class="input input-bordered w-full rounded-none focus:border-teal-500 focus:outline-none" />
+        </div>
+
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text font-bold text-gray-700">{{ labels().form.email }}</span>
+          </label>
+          <input type="email" formControlName="email" [placeholder]="labels().form.placeholderEmail"
+            class="input input-bordered w-full rounded-none focus:border-teal-500 focus:outline-none" />
+        </div>
+
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text font-bold text-gray-700">{{ labels().form.subject }}</span>
+          </label>
+          <input type="text" formControlName="subject" [placeholder]="labels().form.placeholderSubject"
+            class="input input-bordered w-full rounded-none focus:border-teal-500 focus:outline-none" />
+        </div>
+
+        <div class="form-control w-full">
+          <label class="label">
+            <span class="label-text font-bold text-gray-700">{{ labels().form.message }}</span>
+          </label>
+          <textarea formControlName="message" [placeholder]="labels().form.placeholderMessage"
+            class="textarea textarea-bordered h-32 w-full rounded-none focus:border-teal-500 focus:outline-none"></textarea>
+        </div>
+
+        <button type="submit" [disabled]="contactForm.invalid"
+          class="btn btn-primary w-full rounded-none py-4 h-auto text-lg uppercase tracking-widest bg-[#153550] border-[#153550] hover:bg-[#1c4569]">
+          {{ labels().form.submit }}
+        </button>
+      </form>
+    </div>
+  </section>
+</div>

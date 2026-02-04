@@ -120,6 +120,23 @@
   @apply text-4xl font-black text-primary;
 }
 
+/* Price with discount styling */
+.price-with-discount {
+  @apply flex flex-col gap-2;
+}
+
+.original-price {
+  @apply text-xl text-base-content/50 line-through;
+}
+
+.discount-badge-text {
+  @apply inline-block w-fit px-3 py-1 bg-error/20 text-error font-bold text-sm rounded;
+}
+
+.discounted-price {
+  @apply text-4xl font-black text-success;
+}
+
 /* Quantity Selector */
 .quantity-section {
   @apply flex flex-col gap-3 py-4;
@@ -161,23 +178,27 @@
 
 .btn-add-cart,
 .btn-add-favorite {
-  @apply flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-bold transition-all cursor-pointer border-none;
+  @apply flex items-center justify-center gap-2 px-6 py-3 rounded-none font-medium transition-all duration-200 cursor-pointer border;
 }
 
+/* Agregar al carrito - Estilo standard (indigo/purple) */
 .btn-add-cart {
-  @apply flex-1 bg-primary text-white hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply flex-1 bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-800 border-indigo-200 hover:bg-indigo-100 disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
+/* Ya en carrito - Estilo success (verde) */
 .btn-add-cart.in-cart {
-  @apply bg-success hover:bg-success/90;
+  @apply bg-gradient-to-r from-green-50 to-emerald-50 text-green-800 border-green-200 hover:bg-green-100;
 }
 
+/* Agregar a favoritos - Estilo neutral (gray) */
 .btn-add-favorite {
-  @apply flex-1 bg-base-200 text-base-content hover:bg-base-300;
+  @apply flex-1 bg-gradient-to-r from-gray-50 to-gray-50 text-gray-800 border-gray-200 hover:bg-gray-100;
 }
 
+/* En favoritos - Estilo error/pink (rojo) */
 .btn-add-favorite.favorited {
-  @apply bg-error text-white hover:bg-error/90;
+  @apply bg-gradient-to-r from-red-50 to-pink-50 text-red-800 border-red-200 hover:bg-red-100;
 }
 
 .btn-icon {
@@ -235,6 +256,47 @@
   @apply text-sm text-base-content/80;
 }
 
+/* Discount Badge for Product Detail */
+.gallery-section {
+  @apply relative;
+}
+
+.discount-badge-product {
+  @apply absolute top-4 right-4 z-30;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><defs><filter id="shadow"><feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.4"/></filter><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23ff3333;stop-opacity:1" /><stop offset="50%" style="stop-color:%23dd0000;stop-opacity:1" /><stop offset="100%" style="stop-color:%23aa0000;stop-opacity:1" /></linearGradient></defs><circle cx="100" cy="100" r="92" fill="url(%23grad)" filter="url(%23shadow)" stroke="white" stroke-width="8"/><circle cx="100" cy="100" r="88" fill="none" stroke="url(%23grad)" stroke-width="2" opacity="0.3"/></svg>');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: badgePulseProduct 2.5s ease-in-out infinite;
+  font-weight: 900;
+}
+
+.discount-percentage-product {
+  @apply text-white font-black text-4xl leading-none;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.discount-label-product {
+  @apply text-white font-black text-sm mt-1;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+}
+
+@keyframes badgePulseProduct {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .detail-container {
@@ -260,6 +322,38 @@
 
   .gallery-section {
     @apply static;
+  }
+
+  .discount-badge-product {
+    width: 100px;
+    height: 100px;
+    top: 2px;
+    right: 2px;
+  }
+
+  .discount-percentage-product {
+    @apply text-3xl;
+  }
+
+  .discount-label-product {
+    @apply text-xs;
+  }
+}
+
+@media (max-width: 640px) {
+  .discount-badge-product {
+    width: 80px;
+    height: 80px;
+    top: 0;
+    right: 0;
+  }
+
+  .discount-percentage-product {
+    @apply text-2xl;
+  }
+
+  .discount-label-product {
+    @apply text-xs;
   }
 }
 

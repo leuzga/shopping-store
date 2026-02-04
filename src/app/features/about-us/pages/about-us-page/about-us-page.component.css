@@ -1,0 +1,62 @@
+.about-us-container {
+  @apply bg-white min-h-screen overflow-x-hidden;
+  margin-top: -4rem;
+}
+
+@media (min-width: 768px) {
+  .about-us-container {
+    margin-top: -5rem;
+  }
+}
+
+.hero-section {
+  @apply py-20 pt-32;
+  /* Increased padding-top to compensate for overlap and spacing */
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+.card {
+  @apply rounded-none;
+}
+
+.btn-primary {
+  @apply bg-teal-600 border-teal-600 text-white hover:bg-teal-700 hover:border-teal-700 transition-all duration-300;
+}
+
+.btn-outline {
+  @apply border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-300;
+}
+
+.image-wrapper img {
+  @apply transition-transform duration-700 hover:scale-110;
+}
+
+/* Base styles for section titles if needed beyond Tailwind */
+section h2 {
+  @apply tracking-tight;
+}

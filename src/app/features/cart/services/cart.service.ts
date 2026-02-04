@@ -27,7 +27,7 @@ export class CartService {
   );
 
   readonly totalPrice = computed(() =>
-    this.cartItems().reduce((sum, item) => sum + (item.price * item.quantity), 0)
+    this.cartItems().reduce((sum, item) => sum + (this.getDiscountedPrice(item) * item.quantity), 0)
   );
 
   readonly isEmpty = computed(() => this.cartItems().length === 0);
@@ -65,18 +65,44 @@ export class CartService {
   }
 
   /**
+   * Get the discounted price of a cart item
+   * If no discount, returns the original price
+   */
+  getDiscountedPrice(cartItem: CartItem): number {
+    if (!cartItem.discountPercentage || cartItem.discountPercentage <= 0) {
+      return cartItem.price;
+    }
+    return cartItem.price * (1 - cartItem.discountPercentage / 100);
+  }
+
+  /**
+   * Get total discount amount across all items with discounts
+   * Returns the sum of (original price - discounted price) * quantity
+   */
+  getTotalDiscount(): number {
+    return this.cartItems().reduce((total, item) => {
+      if (!item.discountPercentage || item.discountPercentage <= 0) {
+        return total;
+      }
+      const discountAmount = item.price - this.getDiscountedPrice(item);
+      return total + (discountAmount * item.quantity);
+    }, 0);
+  }
+
+  /**
    * Add a product to the cart
    * If the product already exists, increment its quantity
+   * Optionally includes discount from deals page
    */
-  addToCart(product: Product, quantity: number = 1): void {
+  addToCart(product: Product, quantity: number = 1, discountPercentage?: number): void {
     this.cartItems.update(items => {
       const existingIndex = items.findIndex(item => item.productId === product.id);
 
       if (existingIndex >= 0) {
-        // Update quantity immutably
+        // Update quantity immutably, preserve existing discount
         return items.map((item, index) =>
           index === existingIndex
-            ? { ...item, quantity: item.quantity + quantity }
+            ? { ...item, quantity: item.quantity + quantity, discountPercentage: discountPercentage ?? item.discountPercentage }
             : item
         );
       }
@@ -89,6 +115,7 @@ export class CartService {
         price: product.price,
         quantity,
         image: product.image,
+        discountPercentage,
       };
 
       return [...items, newItem];

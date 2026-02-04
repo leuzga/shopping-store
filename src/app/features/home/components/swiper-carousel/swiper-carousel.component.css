@@ -1,11 +1,12 @@
 /* Swiper Carousel Wrapper */
 .swiper-carousel-wrapper {
-  @apply w-full overflow-hidden relative h-80 md:h-96 lg:h-screen max-h-[600px] lg:max-h-full;
+  @apply w-full overflow-hidden relative h-64 md:h-80 lg:h-screen max-h-[480px] lg:max-h-full;
+  transform: translateY(-4px);
 }
 
 /* Swiper Container */
 swiper-container.swiper-carousel {
-  @apply w-full h-80 md:h-96 lg:h-screen max-h-[600px] lg:max-h-full;
+  @apply w-full h-64 md:h-80 lg:h-screen max-h-[480px] lg:max-h-full;
 }
 
 swiper-container::part(container) {
@@ -107,7 +108,7 @@ swiper-container::part(container) {
 /* Responsive Design */
 @media (max-width: 640px) {
   swiper-container.swiper-carousel {
-    @apply h-72;
+    @apply h-56;
   }
 
   .hero-title {
@@ -218,6 +219,76 @@ swiper-container::part(container) {
   100% {
     transform: translateY(6px);
     opacity: 0;
+  }
+}
+
+/* Discount Badge - Professional SVG-based sticker style */
+.discount-badge {
+  @apply absolute right-4 md:right-12 top-1/2 transform -translate-y-1/2 z-30;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><defs><filter id="shadow"><feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.4"/></filter><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23ff3333;stop-opacity:1" /><stop offset="50%" style="stop-color:%23dd0000;stop-opacity:1" /><stop offset="100%" style="stop-color:%23aa0000;stop-opacity:1" /></linearGradient></defs><circle cx="100" cy="100" r="92" fill="url(%23grad)" filter="url(%23shadow)" stroke="white" stroke-width="8"/><circle cx="100" cy="100" r="88" fill="none" stroke="url(%23grad)" stroke-width="2" opacity="0.3"/></svg>');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: badgePulse 2.5s ease-in-out infinite;
+  font-weight: 900;
+}
+
+.discount-percentage {
+  @apply text-white font-black text-6xl leading-none;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.discount-label {
+  @apply text-white font-black text-lg mt-1;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    transform: translate(50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(50%, -50%) scale(1.08);
+  }
+}
+
+/* Mobile responsive for badge */
+@media (max-width: 768px) {
+  .discount-badge {
+    width: 150px;
+    height: 150px;
+    right: 2rem;
+  }
+
+  .discount-percentage {
+    @apply text-5xl;
+  }
+
+  .discount-label {
+    @apply text-base;
+  }
+}
+
+@media (max-width: 640px) {
+  .discount-badge {
+    width: 120px;
+    height: 120px;
+    right: 1rem;
+  }
+
+  .discount-percentage {
+    @apply text-4xl;
+  }
+
+  .discount-label {
+    @apply text-sm;
   }
 }
 

@@ -82,7 +82,7 @@ export class SwiperCarouselComponent implements AfterViewInit {
       if (container?.swiper) {
         container.swiper.update();
         container.swiper.updateAutoHeight();
-        container.swiper.updateSlidesSize();
+        container.swiper.updateSlides();
       }
     }
   }
@@ -160,7 +160,18 @@ export class SwiperCarouselComponent implements AfterViewInit {
   }
 
   navigateToProducts(item: CarouselItem): void {
-    // Pure function: Apply category filters and navigate to products
+    // If has productId and discount, navigate to product detail with discount
+    if (item.productId && item.discount) {
+      this.router.navigate([`/products/${item.productId}`], {
+        state: {
+          discountPercentage: item.discount,
+          backState: item.backState
+        }
+      });
+      return;
+    }
+
+    // Otherwise: Apply category filters and navigate to products list
     const hasFilters = item.categories && item.categories.length > 0;
 
     if (hasFilters) {

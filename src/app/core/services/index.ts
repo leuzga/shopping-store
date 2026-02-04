@@ -10,3 +10,5 @@ export * from './user-repository.service';
 export * from './email-validation.service';
 export * from './delay.service';
 export * from './storage.service';
+export * from './notification.service';
+export * from './icons.service';

@@ -6,10 +6,11 @@ import { ProductFilterService, type CategoryType } from '../../services/product-
 import { ProductSortService, type SortType } from '../../services/product-sort.service';
 import { ProductSearchService } from '../../services/product-search.service';
 import { CartService } from '@features/cart/services/cart.service';
+import { NotificationService } from '@core/services';
 import { Product } from '@core/models';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { ProductFilterComponent } from '../product-filter/product-filter.component';
-import { PRODUCT_MESSAGES, PAGINATION } from '@core/constants';
+import { PRODUCT_MESSAGES, PAGINATION, NOTIFICATION_MESSAGES } from '@core/constants';
 import { applyFilters, applySorting } from '../../utils/search.utils';
 
 @Component({
@@ -25,6 +26,7 @@ export class ProductListComponent implements AfterViewInit, OnDestroy {
   private readonly sortService = inject(ProductSortService);
   readonly searchService = inject(ProductSearchService);
   private readonly cartService = inject(CartService);
+  private readonly notificationService = inject(NotificationService);
   private readonly router = inject(Router);
   @ViewChild('loadMoreTrigger') loadMoreTrigger?: ElementRef;
 
@@ -236,9 +238,12 @@ export class ProductListComponent implements AfterViewInit, OnDestroy {
 
   /**
    * Handle adding product to cart
+   * Muestra notificación de éxito cuando se agrega un producto
    */
   onAddToCart(product: Product): void {
     this.cartService.addToCart(product, 1);
-    console.log(`Added "${product.title}" to cart`);
+    this.notificationService.showSuccess(
+      NOTIFICATION_MESSAGES.CART.ADD_SUCCESS
+    );
   }
 }

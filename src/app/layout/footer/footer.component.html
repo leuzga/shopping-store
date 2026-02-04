@@ -1,5 +1,112 @@
-<footer class="w-full py-6 px-4 text-center text-white" style="background: #578FCA;">
-  <p class="text-sm md:text-base">
-    {{ footerLabel.copyright }} {{ footerLabel.createdBy }} {{ footerLabel.year }}
-  </p>
+<footer class="w-full footer-bg text-white">
+  <!-- Brands Marquee -->
+  <div class="marquee-container mb-16">
+    <div class="marquee-content">
+      @for (brand of brands(); track brand.name) {
+      <div class="brand-item">
+        <span [innerHTML]="brand.safeIcon"></span>
+        <span>{{ brand.displayName }}</span>
+      </div>
+      }
+      <!-- Duplicated for seamless loop -->
+      @for (brand of brands(); track brand.name + '-copy') {
+      <div class="brand-item">
+        <span [innerHTML]="brand.safeIcon"></span>
+        <span>{{ brand.displayName }}</span>
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- Main Footer Content -->
+  <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-16">
+    <!-- About Section -->
+    <div>
+      <h3 class="footer-section-title">{{ labels().about.title }}</h3>
+      <p class="text-white/70 leading-relaxed max-w-xs">
+        {{ labels().about.description }}
+      </p>
+      <button class="cta-button" routerLink="/about-us">
+        {{ labels().about.buttonText }}
+        <span class="text-xl">→</span>
+      </button>
+    </div>
+
+    <!-- Services Section -->
+    <div>
+      <h3 class="footer-section-title">{{ labels().services.title }}</h3>
+      <ul class="space-y-4">
+        @for (item of labels().services.items; track item) {
+        <li>
+          <a href="#" class="footer-link">
+            <span class="text-xs">✓</span>
+            {{ item }}
+          </a>
+        </li>
+        }
+      </ul>
+    </div>
+
+    <!-- Useful Links Section -->
+    <div>
+      <h3 class="footer-section-title">{{ labels().usefulLinks.title }}</h3>
+      <ul class="space-y-4">
+        @for (item of labels().usefulLinks.items; track item) {
+        <li>
+          <a href="#" class="footer-link">
+            <span class="text-xs">✓</span>
+            {{ item }}
+          </a>
+        </li>
+        }
+      </ul>
+    </div>
+
+    <!-- Contact Section -->
+    <div>
+      <h3 class="footer-section-title">{{ labels().contact.title }}</h3>
+      <div class="space-y-6">
+        <p class="text-white/70 flex gap-3 text-sm leading-relaxed">
+          <span class="mt-1">📍</span>
+          {{ labels().contact.address }}
+        </p>
+        <p class="text-white/70 flex items-center gap-3">
+          <span>✉️</span>
+          {{ labels().contact.mailOn }} {{ labels().contact.email }}
+        </p>
+        <p class="text-white/70 flex items-center gap-3">
+          <span>📞</span>
+          {{ labels().contact.callOn }} {{ labels().contact.phone }}
+        </p>
+
+        <!-- Social Icons -->
+        <div class="flex gap-4 pt-4">
+          @for (social of socials(); track social.platform) {
+          <a [href]="social.url" class="social-icon" [title]="social.platform">
+            <span [innerHTML]="social.safeIcon" class="flex items-center justify-center"></span>
+          </a>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Legal Bar -->
+  <div class="border-t border-white/10 py-8">
+    <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-white/60 text-sm">
+        Copyright {{ labels().copyright }} {{ labels().year }}. {{ labels().allRightsReserved }}
+      </p>
+      <div class="flex gap-8 text-sm">
+        <a href="#" class="footer-link">
+          <span class="text-xs">✓</span>
+          {{ labels().legal.privacy }}
+        </a>
+        <a href="#" class="footer-link">
+          <span class="text-xs">✓</span>
+          {{ labels().legal.terms }}
+        </a>
+      </div>
+    </div>
+  </div>
 </footer>

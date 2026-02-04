@@ -61,4 +61,20 @@ export class ProductService {
   getCategories(): Observable<string[]> {
     return this.http.get<string[]>(API_ENDPOINTS.CATEGORIES);
   }
+
+  /**
+   * Get products by category with limit and skip
+   */
+  getProductsByCategory(category: string, limit: number = 20, skip: number = 0): Observable<{ products: Product[], total: number }> {
+    const params = new HttpParams()
+      .set('limit', limit.toString())
+      .set('skip', skip.toString());
+
+    return this.http.get<PaginatedResponse<any>>(API_ENDPOINTS.PRODUCTS_BY_CATEGORY(category), { params }).pipe(
+      map((res: PaginatedResponse<any>) => ({
+        total: res.total,
+        products: res.products.map(mapDummyToProduct)
+      }))
+    );
+  }
 }

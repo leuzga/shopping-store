@@ -1,0 +1,63 @@
+/* Minimalist Deal Section */
+.deal-section-minimal {
+  @apply py-16 px-4 md:px-12 max-w-[1400px] mx-auto;
+  background-color: transparent;
+}
+
+/* Header */
+.minimal-header {
+  @apply flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12;
+  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 2rem;
+}
+
+.header-content {
+  @apply flex flex-col gap-2;
+}
+
+.section-title {
+  @apply text-4xl md:text-5xl font-light text-gray-900 tracking-tight;
+  margin: 0;
+}
+
+.section-subtitle {
+  @apply text-lg text-gray-500 font-normal;
+  margin: 0;
+}
+
+.discount-range {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-full text-sm font-medium;
+  background-color: #f3f4f6;
+  color: #4b5563;
+  letter-spacing: 0.5px;
+}
+
+/* Grids */
+.products-grid-minimal {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-12;
+}
+
+.bundles-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
+}
+
+/* Empty State */
+.empty-state {
+  @apply flex flex-col items-center justify-center py-24 text-center;
+  color: #9ca3af;
+}
+
+/* Responsive Overrides */
+@media (max-width: 768px) {
+  .deal-section-minimal {
+    @apply py-10 px-4;
+  }
+
+  .minimal-header {
+    @apply flex-col items-start gap-4 mb-8;
+  }
+
+  .section-title {
+    @apply text-3xl;
+  }
+}

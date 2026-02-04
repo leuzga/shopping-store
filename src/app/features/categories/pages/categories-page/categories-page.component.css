@@ -1,6 +1,9 @@
 /**
- * Responsabilidad única: Masonry grid layout para categorías
- * CSS Grid con tamaños variables, colores pasteles, diseño responsivo
+ * Responsabilidad única: True Masonry grid layout para categorías
+ * CSS Grid con dense auto-flow para llenar gaps automáticamente
+ * Imágenes completas dentro de sus contenedores con object-fit: contain
+ * Padding adaptativo según tamaño de contenedor
+ * Sin bordes redondeados, masonry real desde tablet
  */
 :host {
   @apply block min-h-[calc(100vh-8rem)] bg-base-100;
@@ -10,111 +13,132 @@
   @apply w-full px-4 md:px-8 py-8;
   opacity: 0;
   transition: opacity 0.6s ease-in-out;
+  background: linear-gradient(135deg, rgba(255, 192, 203, 0.08) 0%, rgba(34, 150, 243, 0.08) 100%);
 }
 
 .categories-container.fade-in {
   @apply opacity-100;
 }
 
+/* Base grid - Mobile: single column */
 .masonry-grid {
-  @apply grid gap-4 md:gap-6 auto-rows-max;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  @apply grid gap-3;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 200px;
+  grid-auto-flow: dense;
   max-width: 1400px;
   margin: 0 auto;
 }
 
-/* Responsive grid - Desktop (4 columns) */
-@media (min-width: 1024px) {
+/* Tablet and Desktop - Enable TRUE masonry with varied sizes */
+@media (min-width: 768px) {
   .masonry-grid {
     grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 180px;
+    gap: 1rem;
+  }
+
+  /* Extra Large card (2x2): Laptops, Men's Shirts, Women's Bags, Men's Shoes, Vehicle */
+  .masonry-card.col-span-2.row-span-2 {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  /* Wide card (2x1): Motorcycle, Sunglasses, Tablets */
+  .masonry-card.col-span-2:not(.row-span-2) {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  /* Tall card (1x2): Women's Dresses, Smartphones, Tops */
+  .masonry-card.col-span-1.row-span-2 {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+
+  /* Square card (1x1): Default for other categories */
+  .masonry-card.col-span-1:not(.row-span-2) {
+    grid-column: span 1;
+    grid-row: span 1;
   }
 }
 
-/* Tablet (2-3 columns) */
-@media (min-width: 768px) and (max-width: 1023px) {
+/* Larger desktop - more spacing */
+@media (min-width: 1280px) {
   .masonry-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 200px;
+    gap: 1.25rem;
   }
 }
 
-/* Mobile (1 column) */
-@media (max-width: 767px) {
-  .masonry-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* Disable size variations on mobile */
-  .masonry-card.col-span-2,
-  .masonry-card.row-span-2 {
-    grid-column: span 1 !important;
-    grid-row: span 1 !important;
-  }
-}
-
-/* Masonry card styling - Colorful pastel design */
+/* Masonry card base styling */
 .masonry-card {
-  @apply relative overflow-hidden cursor-pointer transition-all hover:shadow-2xl hover:scale-105;
-  aspect-ratio: 1;
-  min-height: 200px;
-  background: linear-gradient(135deg, #FFE5E5 0%, #FFF0F0 100%);
+  @apply relative overflow-hidden cursor-pointer transition-all;
+  border: 0.25px solid #e5e5e5;
+  background-color: #153550;
 }
 
-/* Pastel color variations for random look */
-.masonry-card:nth-child(1) { background: linear-gradient(135deg, #FFE5E5 0%, #FFF0F0 100%); }
-.masonry-card:nth-child(2) { background: linear-gradient(135deg, #E5F5FF 0%, #F0FAFF 100%); }
-.masonry-card:nth-child(3) { background: linear-gradient(135deg, #E5FFE5 0%, #F0FFF0 100%); }
-.masonry-card:nth-child(4) { background: linear-gradient(135deg, #FFF5E5 0%, #FFFAF0 100%); }
-.masonry-card:nth-child(5) { background: linear-gradient(135deg, #F5E5FF 0%, #FAF0FF 100%); }
-.masonry-card:nth-child(6) { background: linear-gradient(135deg, #FFE5F5 0%, #FFF0FA 100%); }
-.masonry-card:nth-child(7) { background: linear-gradient(135deg, #E5FFFF 0%, #F0FFFF 100%); }
-.masonry-card:nth-child(8) { background: linear-gradient(135deg, #FFFFE5 0%, #FFFFF0 100%); }
-
-/* Large card (2x2) - Desktop only */
-.masonry-card.col-span-2.row-span-2 {
-  grid-column: span 2;
-  grid-row: span 2;
-  aspect-ratio: 1;
-  min-height: 400px;
+/* Hover effect */
+.masonry-card:hover {
+  @apply shadow-2xl;
+  transform: scale(1.02);
 }
 
-/* Wide card (2x1) - Desktop only */
-.masonry-card.col-span-2:not(.row-span-2) {
-  grid-column: span 2;
-  aspect-ratio: 2;
-  min-height: 220px;
-}
-
-/* Tall card (1x2) - Desktop only */
-.masonry-card.col-span-1.row-span-2 {
-  grid-row: span 2;
-  aspect-ratio: 0.5;
-  min-height: 420px;
-}
-
-/* Card image - covers entire card */
+/* Card image wrapper - fills entire card */
 .card-image-wrapper {
   @apply w-full h-full overflow-hidden;
+  background-color: #153550;
 }
 
+/* Image styling - TODAS las imágenes usan contain para verse completas */
 .card-image {
-  @apply w-full h-full object-cover transition-transform hover:scale-105;
+  @apply w-full h-full transition-transform;
+  object-fit: contain;
+  padding: 1rem;
 }
 
-/* Overlay for text contrast - only bottom half */
+/* Padding adaptativo según tamaño de contenedor */
+@media (min-width: 768px) {
+
+  /* Contenedores grandes (2x2): padding mínimo para aprovechar espacio */
+  .col-span-2.row-span-2 .card-image {
+    padding: 0.5rem;
+  }
+
+  /* Contenedores rectangulares anchos (2x1): padding pequeño */
+  .col-span-2:not(.row-span-2) .card-image {
+    padding: 0.25rem;
+  }
+
+  /* Contenedores verticales (1x2): padding moderado */
+  .col-span-1.row-span-2 .card-image {
+    padding: 0.75rem;
+  }
+
+  /* Contenedores pequeños (1x1): más padding para centrar */
+  .col-span-1:not(.row-span-2) .card-image {
+    padding: 1rem;
+  }
+}
+
+.card-image:hover {
+  transform: scale(1.05);
+}
+
+/* Overlay - removed to keep images clean */
 .card-overlay {
-  @apply absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent;
-  height: 60%;
-  z-index: 1;
+  display: none;
 }
 
 /* Card content - positioned at bottom */
 .card-content {
-  @apply absolute bottom-0 left-0 right-0 p-4 md:p-6 z-10;
+  @apply absolute bottom-0 left-0 right-0 p-3 md:p-4 z-10;
 }
 
 .card-title {
-  @apply text-white font-bold text-lg md:text-xl leading-tight;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  @apply font-bold text-base md:text-lg leading-tight;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 /* Empty state */

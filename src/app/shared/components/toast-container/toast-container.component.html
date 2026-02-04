@@ -1,0 +1,5 @@
+<div class="fixed top-4 left-1/2 -translate-x-1/2 z-50 space-y-3 flex flex-col items-center">
+  @for (toast of notificationService.notifications(); track toast.id) {
+  <app-toast [toast]="toast" [onDismiss]="createDismissCallback(toast.id)" />
+  }
+</div>

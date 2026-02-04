@@ -18,6 +18,10 @@ export const routes: Routes = [
     loadComponent: () => import('./features/categories/pages/categories-page/categories-page.component').then(m => m.CategoriesPageComponent)
   },
   {
+    path: 'deals/bundle/:id',
+    loadComponent: () => import('./features/deals/pages/bundle-detail-page/bundle-detail-page.component').then(m => m.BundleDetailPageComponent)
+  },
+  {
     path: 'deals',
     loadComponent: () => import('./features/deals/pages/deals-page/deals-page.component').then(m => m.DealsPageComponent)
   },
@@ -40,5 +44,13 @@ export const routes: Routes = [
   {
     path: 'addresses',
     loadComponent: () => import('./features/user/pages/addresses-page/addresses-page.component').then(m => m.AddressesPageComponent)
+  },
+  {
+    path: 'about-us',
+    loadComponent: () => import('./features/about-us/pages/about-us-page/about-us-page.component').then(m => m.AboutUsPageComponent)
+  },
+  {
+    path: 'contact-us',
+    loadComponent: () => import('./features/contact-us/pages/contact-us-page/contact-us-page.component').then(m => m.ContactUsPageComponent)
   }
 ];

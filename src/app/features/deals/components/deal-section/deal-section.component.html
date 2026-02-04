@@ -1,0 +1,44 @@
+@if (section(); as deal) {
+<section class="deal-section-minimal"
+  [id]="deal.bundles && deal.bundles.length > 0 ? 'bundles-section' : (deal.id === 1 ? 'weekly-deals' : null)">
+  <!-- Minimalist Header -->
+  <div class="minimal-header">
+    <div class="header-content">
+      <h2 class="section-title">{{ deal.title }}</h2>
+      <p class="section-subtitle">{{ deal.subtitle }}</p>
+    </div>
+    <span class="discount-range">{{ deal.minDiscount }}-{{ deal.maxDiscount }}% OFF</span>
+  </div>
+
+  <!-- Bundles Grid (if bundles exist) -->
+  @if (deal.bundles && deal.bundles.length > 0) {
+  <div class="bundles-grid">
+    @for (bundle of deal.bundles; track bundle.id) {
+    <app-bundle-card [bundle]="bundle">
+    </app-bundle-card>
+    }
+  </div>
+  }
+
+  <!-- Products Grid (for Weekly Deals or fallback) -->
+  @else {
+  <div class="products-grid-minimal">
+    @for (dealProduct of deal.products; track dealProduct.product.id) {
+    <app-product-card [product]="getProduct(dealProduct)"
+      [dealLabel]="'-' + getRoundedDiscount(dealProduct.discountPercentage) + '%'"
+      [discountPercentage]="dealProduct.discountPercentage"
+      [backState]="{ returnTo: '/deals', fragment: 'weekly-deals', label: LABELS.SECTION.BACK_TO_WEEKLY }"
+      (addToCart)="onAddToCart($event, dealProduct.discountPercentage)">
+    </app-product-card>
+    }
+  </div>
+  }
+
+  <!-- Empty State -->
+  @if (!deal.bundles && deal.products.length === 0) {
+  <div class="empty-state">
+    <p>{{ LABELS.SECTION.NO_DEALS_AVAILABLE }}</p>
+  </div>
+  }
+</section>
+}
