@@ -3,8 +3,7 @@
 }
 
 .footer-bg {
-  background-color: #578FCA;
-  /* Original blue theme color */
+  background-color: #b2ccd6;
 }
 
 /* Marquee Animation */
@@ -43,21 +42,25 @@
   /* 56px */
   height: 3.5rem !important;
   /* 56px */
-  stroke: white !important;
-  /* Forced color for visibility */
+  stroke: #1e293b !important;
+  /* slate-800 for contrast */
   stroke-width: 2px;
 }
 
 .footer-section-title {
-  @apply text-white text-xl font-bold mb-8;
+  @apply text-slate-800 text-xl font-bold mb-8;
 }
 
 .footer-link {
   @apply flex items-center gap-2 text-white/70 hover:text-white transition-colors py-1 text-sm md:text-base;
 }
 
+.footer-link-dark {
+  @apply flex items-center gap-2 text-slate-700 hover:text-slate-900 transition-colors py-1 text-sm md:text-base;
+}
+
 .social-icon {
-  @apply w-10 h-10 rounded-full bg-white text-[#578FCA] flex items-center justify-center hover:bg-white/90 transition-colors font-bold text-lg;
+  @apply w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-slate-700 transition-colors font-bold text-lg;
 }
 
 .social-icon span svg {
@@ -66,5 +69,5 @@
 }
 
 .cta-button {
-  @apply bg-white text-[#578FCA] px-8 py-3 rounded-none font-medium hover:bg-white/90 transition-colors mt-6 inline-flex items-center gap-2;
+  @apply bg-slate-800 text-white px-8 py-3 rounded-none font-medium hover:bg-slate-700 transition-colors mt-6 inline-flex items-center gap-2;
 }

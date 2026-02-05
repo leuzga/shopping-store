@@ -26,10 +26,6 @@
   @apply flex items-center gap-2;
 }
 
-.clear-btn {
-  @apply btn btn-ghost btn-circle btn-sm text-error hover:text-error hover:bg-error/10 border-none bg-transparent;
-}
-
 .close-btn {
   @apply btn btn-ghost btn-circle btn-sm text-base-content/60 hover:text-base-content border-none bg-transparent;
 }
@@ -110,18 +106,6 @@
   @apply flex gap-3 p-4 sm:p-6 border-t border-base-200 bg-base-200/30 flex-shrink-0;
 }
 
-.btn-continue-shopping {
-  @apply btn btn-ghost btn-sm flex-1 border-none bg-transparent text-base-content;
-}
-
-.btn-checkout {
-  @apply btn btn-secondary btn-sm flex-1 border-none text-white;
-}
-
-.btn-checkout:disabled {
-  @apply opacity-50 cursor-not-allowed;
-}
-
 /* Scrollbar styling */
 .cart-content::-webkit-scrollbar {
   width: 6px;
@@ -147,12 +131,4 @@
 
 .dialog-actions {
   @apply flex gap-3;
-}
-
-.btn-cancel {
-  @apply btn btn-ghost btn-sm flex-1 border-none bg-transparent text-base-content;
-}
-
-.btn-confirm {
-  @apply btn btn-error btn-sm flex-1 border-none text-white;
 }

@@ -26,6 +26,9 @@ export const NOTIFICATION_MESSAGES = {
   PROFILE: {
     UPDATE_SUCCESS: 'Perfil actualizado',
     UPDATE_ERROR: 'Error al actualizar perfil',
-    DELETE_SUCCESS: 'Eliminado exitosamente',
+  },
+  // Contacto
+  CONTACT: {
+    SUCCESS: 'Mensaje Enviado, pronto le contactaremos...',
   },
 } as const;

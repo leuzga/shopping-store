@@ -1,0 +1,64 @@
+.checkout-container {
+  @apply min-h-screen bg-slate-50 pt-32 pb-24;
+}
+
+.steps-container {
+  @apply flex items-center justify-between max-w-2xl mx-auto relative;
+}
+
+.steps-container::before {
+  content: '';
+  @apply absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 -translate-y-1/2 z-0;
+}
+
+.step-item {
+  @apply relative z-10 flex flex-col items-center gap-2 cursor-pointer transition-all duration-300;
+}
+
+.step-icon {
+  @apply w-12 h-12 rounded-full bg-white border-2 border-slate-200 flex items-center justify-center text-xl shadow-sm transition-all duration-300;
+}
+
+.step-label {
+  @apply text-sm font-medium text-slate-400;
+}
+
+.step-item.active .step-icon {
+  @apply border-indigo-600 bg-indigo-50 scale-110 shadow-indigo-100;
+}
+
+.step-item.active .step-label {
+  @apply text-indigo-700 font-bold;
+}
+
+.step-item.completed .step-icon {
+  @apply border-green-500 bg-green-50;
+}
+
+.step-item.completed .step-label {
+  @apply text-green-700;
+}
+
+.step-card {
+  @apply bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden;
+}
+
+.summary-card {
+  @apply bg-white rounded-2xl shadow-lg border border-slate-100 p-8;
+}
+
+.animate-enter {
+  animation: enter 0.4s ease-out forwards;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,88 @@
+<div class="checkout-container animate-fade-in">
+  <div class="max-w-7xl mx-auto px-4 py-12">
+    <!-- Header -->
+    <header class="mb-12 text-center">
+      <h1 class="text-4xl font-bold text-slate-900 mb-4">Checkout</h1>
+      <p class="text-slate-600">Completa tu pedido de forma segura</p>
+    </header>
+
+    <!-- Stepper -->
+    <nav class="mb-12">
+      <ul class="steps-container">
+        @for (step of steps; track step.id) {
+        <li class="step-item" [class.active]="isStepActive(step.id)" [class.completed]="isStepCompleted(step.id)"
+          (click)="goToStep(step.id)">
+          <div class="step-icon">{{ step.icon }}</div>
+          <span class="step-label">{{ step.label }}</span>
+        </li>
+        }
+      </ul>
+    </nav>
+
+    <!-- Content Area -->
+    <main class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-8">
+        <!-- Step Content will go here via Dynamic components or simple @switch -->
+        <div class="step-card">
+          @switch (currentStep()) {
+          @case ('review') {
+          <app-review-step class="animate-enter" />
+          }
+          @case ('shipping') {
+          <app-shipping-step class="animate-enter" />
+          }
+          @case ('payment') {
+          <app-payment-step class="animate-enter" />
+          }
+          @case ('confirmation') {
+          <app-confirmation-step class="animate-enter" />
+          }
+          }
+        </div>
+      </div>
+
+      <!-- Sticky Summary (Side Desktop) -->
+      @if (currentStep() !== 'confirmation') {
+      <aside class="lg:col-span-4">
+        <div class="summary-card sticky top-24">
+          <h3 class="text-xl font-bold mb-6 border-b pb-4">Resumen de Orden</h3>
+
+          <div class="space-y-4 mb-6">
+            <div class="flex justify-between text-slate-600">
+              <span>Subtotal</span>
+              <span>{{ checkoutFacade.subtotal() | currency }}</span>
+            </div>
+
+            @if (checkoutFacade.discountAmount() > 0) {
+            <div class="flex justify-between text-green-600">
+              <span>Descuento ({{ checkoutFacade.appliedDiscountCode()?.code }})</span>
+              <span>-{{ checkoutFacade.discountAmount() | currency }}</span>
+            </div>
+            }
+
+            @if (checkoutFacade.selectedShippingMethod()) {
+            <div class="flex justify-between text-slate-600">
+              <span>Envío ({{ checkoutFacade.selectedShippingMethod()?.name }})</span>
+              <span>{{ checkoutFacade.shippingCost() | currency }}</span>
+            </div>
+            }
+          </div>
+
+          <div class="border-t pt-4 mt-4">
+            <div class="flex justify-between items-center font-bold text-2xl text-slate-900">
+              <span>Total</span>
+              <span>{{ total() | currency }}</span>
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <p class="text-xs text-slate-400 text-center">
+              Pago protegido con encriptación SSL de 256 bits
+            </p>
+          </div>
+        </div>
+      </aside>
+      }
+    </main>
+  </div>
+</div>

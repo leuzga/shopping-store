@@ -1,0 +1,31 @@
+<div class="p-12 text-center">
+  <div
+    class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center text-5xl mx-auto mb-8 animate-bounce-slow">
+    ✅
+  </div>
+
+  <h2 class="text-3xl font-bold text-slate-900 mb-4">¡Pedido Realizado con Éxito!</h2>
+  <p class="text-slate-600 mb-10 max-w-md mx-auto">
+    Gracias por tu compra. Tu pedido ha sido procesado y recibirás un correo de confirmación a la brevedad.
+  </p>
+
+  <div class="bg-slate-50 rounded-2xl p-8 mb-10 text-left max-w-sm mx-auto border border-slate-100">
+    <div class="flex justify-between mb-4 pb-4 border-b border-slate-200">
+      <span class="text-slate-500">ID de Pedido</span>
+      <span class="font-bold text-slate-900">#{{ (100000 + (34839 * Math.random()) | number:'1.0-0') }}</span>
+    </div>
+    <div class="flex justify-between">
+      <span class="text-slate-500">Estado</span>
+      <span class="text-green-600 font-bold uppercase text-sm">Procesado</span>
+    </div>
+  </div>
+
+  <div class="flex flex-col sm:flex-row gap-4 justify-center">
+    <button routerLink="/" class="btn-minimalist-indigo px-8 py-4">
+      Seguir Comprando
+    </button>
+    <button routerLink="/profile" class="btn-minimalist-white px-8 py-4">
+      Ver Mis Pedidos
+    </button>
+  </div>
+</div>

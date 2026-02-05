@@ -52,5 +52,9 @@ export const routes: Routes = [
   {
     path: 'contact-us',
     loadComponent: () => import('./features/contact-us/pages/contact-us-page/contact-us-page.component').then(m => m.ContactUsPageComponent)
+  },
+  {
+    path: 'checkout',
+    loadComponent: () => import('./features/checkout/pages/checkout-page/checkout-page.component').then(m => m.CheckoutPageComponent)
   }
 ];

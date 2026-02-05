@@ -1,0 +1,74 @@
+<div class="p-8">
+  <h2 class="text-2xl font-bold text-slate-900 mb-8">Método de Pago</h2>
+
+  <!-- Mock Credit Card Display -->
+  <div class="card-visual mb-12">
+    <div class="card-chip"></div>
+    <div class="card-number-display">
+      {{ paymentForm().cardNumber || '**** **** **** ****' }}
+    </div>
+    <div class="flex justify-between items-end mt-8">
+      <div>
+        <div class="text-[10px] uppercase text-indigo-200 mb-1">Card Holder</div>
+        <div class="text-lg font-medium tracking-widest uppercase">
+          {{ paymentForm().cardHolder || 'FULL NAME' }}
+        </div>
+      </div>
+      <div class="text-right">
+        <div class="text-[10px] uppercase text-indigo-200 mb-1">Expires</div>
+        <div class="text-lg font-medium">{{ paymentForm().expiryDate || 'MM/YY' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <form class="space-y-6">
+    <div class="form-control">
+      <label class="label"><span class="label-text font-bold">Nombre en la tarjeta</span></label>
+      <input type="text" [ngModel]="paymentForm().cardHolder" (ngModelChange)="updateField('cardHolder', $event)"
+        name="cardHolder" class="input-modern" placeholder="Como aparece en el plástico" required>
+    </div>
+
+    <div class="form-control">
+      <label class="label"><span class="label-text font-bold">Número de tarjeta</span></label>
+      <input type="text" [value]="paymentForm().cardNumber" (input)="formatCardNumber($event)" name="cardNumber"
+        class="input-modern" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" required>
+    </div>
+
+    <div class="grid grid-cols-2 gap-6">
+      <div class="form-control">
+        <label class="label"><span class="label-text font-bold">Fecha de Expiración</span></label>
+        <input type="text" [value]="paymentForm().expiryDate" (input)="formatExpiry($event)" name="expiryDate"
+          class="input-modern" placeholder="MM/YY" maxlength="5" required>
+      </div>
+      <div class="form-control">
+        <label class="label"><span class="label-text font-bold">CVV</span></label>
+        <input type="password" [ngModel]="paymentForm().cvv" (ngModelChange)="updateField('cvv', $event)" name="cvv"
+          class="input-modern" placeholder="XXX" maxlength="4" required>
+      </div>
+    </div>
+
+    <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-start gap-3 mt-4">
+      <span class="text-slate-400">ℹ️</span>
+      <p class="text-xs text-slate-500">
+        Esta es una tienda de demostración. No ingreses datos de tarjetas reales. Cualquier número válido funcionará
+        para la simulación.
+      </p>
+    </div>
+  </form>
+
+  <!-- Footer Actions -->
+  <div class="flex justify-between items-center pt-8 border-t border-slate-100 mt-12">
+    <button (click)="prevStep()" [disabled]="isProcessing()" class="btn-minimalist-ghost py-2">
+      ← Volver al Envío
+    </button>
+    <button (click)="processPayment()" [disabled]="!isFormValid() || isProcessing()"
+      class="btn-minimalist-indigo px-10 py-4 text-lg min-w-[200px]">
+      @if (isProcessing()) {
+      <span class="loading loading-spinner loading-md"></span>
+      Procesando...
+      } @else {
+      Finalizar Pedido
+      }
+    </button>
+  </div>
+</div>

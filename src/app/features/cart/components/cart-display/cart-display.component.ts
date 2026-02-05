@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/cart.service';
 import { CartPanelService } from '../../services/cart-panel.service';
+import { Router } from '@angular/router';
 import { NotificationService } from '@core/services';
 import { CartItemComponent } from '../cart-item';
 import { CART_MESSAGES, NOTIFICATION_MESSAGES } from '@core/constants/messages';
@@ -27,6 +28,7 @@ export class CartDisplayComponent {
   readonly cartService = inject(CartService);
   readonly cartPanelService = inject(CartPanelService);
   private readonly notificationService = inject(NotificationService);
+  private readonly router = inject(Router);
   readonly messages = CART_MESSAGES;
 
   // Confirmation dialog state
@@ -71,5 +73,13 @@ export class CartDisplayComponent {
     this.notificationService.showSuccess(
       NOTIFICATION_MESSAGES.CART.CLEAR_SUCCESS
     );
+  }
+
+  /**
+   * Event handler: Navigate to checkout and close panel
+   */
+  onCheckout(): void {
+    this.cartPanelService.close();
+    this.router.navigate(['/checkout']);
   }
 }

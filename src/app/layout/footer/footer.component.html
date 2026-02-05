@@ -1,4 +1,4 @@
-<footer class="w-full footer-bg text-white">
+<footer class="w-full footer-bg text-slate-800">
   <!-- Brands Marquee -->
   <div class="marquee-container mb-16">
     <div class="marquee-content">
@@ -23,7 +23,7 @@
     <!-- About Section -->
     <div>
       <h3 class="footer-section-title">{{ labels().about.title }}</h3>
-      <p class="text-white/70 leading-relaxed max-w-xs">
+      <p class="text-slate-700 leading-relaxed max-w-xs">
         {{ labels().about.description }}
       </p>
       <button class="cta-button" routerLink="/about-us">
@@ -38,7 +38,7 @@
       <ul class="space-y-4">
         @for (item of labels().services.items; track item) {
         <li>
-          <a href="#" class="footer-link">
+          <a href="#" class="footer-link-dark">
             <span class="text-xs">✓</span>
             {{ item }}
           </a>
@@ -53,7 +53,7 @@
       <ul class="space-y-4">
         @for (item of labels().usefulLinks.items; track item) {
         <li>
-          <a href="#" class="footer-link">
+          <a href="#" class="footer-link-dark">
             <span class="text-xs">✓</span>
             {{ item }}
           </a>
@@ -66,15 +66,15 @@
     <div>
       <h3 class="footer-section-title">{{ labels().contact.title }}</h3>
       <div class="space-y-6">
-        <p class="text-white/70 flex gap-3 text-sm leading-relaxed">
+        <p class="text-slate-700 flex gap-3 text-sm leading-relaxed">
           <span class="mt-1">📍</span>
           {{ labels().contact.address }}
         </p>
-        <p class="text-white/70 flex items-center gap-3">
+        <p class="text-slate-700 flex items-center gap-3">
           <span>✉️</span>
           {{ labels().contact.mailOn }} {{ labels().contact.email }}
         </p>
-        <p class="text-white/70 flex items-center gap-3">
+        <p class="text-slate-700 flex items-center gap-3">
           <span>📞</span>
           {{ labels().contact.callOn }} {{ labels().contact.phone }}
         </p>
@@ -92,9 +92,9 @@
   </div>
 
   <!-- Bottom Legal Bar -->
-  <div class="border-t border-white/10 py-8">
+  <div class="border-t border-slate-300 py-8">
     <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-      <p class="text-white/60 text-sm">
+      <p class="text-slate-600 text-sm">
         Copyright {{ labels().copyright }} {{ labels().year }}. {{ labels().allRightsReserved }}
       </p>
       <div class="flex gap-8 text-sm">

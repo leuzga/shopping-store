@@ -1,0 +1,84 @@
+<div class="p-8">
+  <h2 class="text-2xl font-bold text-slate-900 mb-8">Información de Envío</h2>
+
+  <form class="space-y-6 mb-12">
+    <!-- Name Group -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="form-control">
+        <label class="label"><span class="label-text font-bold">Nombre</span></label>
+        <input type="text" [ngModel]="addressForm().firstName" (ngModelChange)="updateField('firstName', $event)"
+          name="firstName" class="input-modern" required>
+      </div>
+      <div class="form-control">
+        <label class="label"><span class="label-text font-bold">Apellido</span></label>
+        <input type="text" [ngModel]="addressForm().lastName" (ngModelChange)="updateField('lastName', $event)"
+          name="lastName" class="input-modern" required>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-control">
+      <label class="label"><span class="label-text font-bold">Email de contacto</span></label>
+      <input type="email" [ngModel]="addressForm().email" (ngModelChange)="updateField('email', $event)" name="email"
+        class="input-modern" required>
+      <p class="text-xs text-slate-400 mt-1">Enviaremos tu confirmación a esta dirección</p>
+    </div>
+
+    <!-- Address -->
+    <div class="form-control">
+      <label class="label"><span class="label-text font-bold">Dirección</span></label>
+      <input type="text" [ngModel]="addressForm().address" (ngModelChange)="updateField('address', $event)"
+        name="address" class="input-modern" placeholder="Calle, número, depto..." required>
+    </div>
+
+    <!-- City & State Group -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="form-control md:col-span-1">
+        <label class="label"><span class="label-text font-bold">City</span></label>
+        <input type="text" [ngModel]="addressForm().city" (ngModelChange)="updateField('city', $event)" name="city"
+          class="input-modern" required>
+      </div>
+      <div class="form-control md:col-span-1">
+        <label class="label"><span class="label-text font-bold">Estado/Región</span></label>
+        <input type="text" [ngModel]="addressForm().state" (ngModelChange)="updateField('state', $event)" name="state"
+          class="input-modern" required>
+      </div>
+      <div class="form-control md:col-span-1">
+        <label class="label"><span class="label-text font-bold">Código Postal</span></label>
+        <input type="text" [ngModel]="addressForm().zipCode" (ngModelChange)="updateField('zipCode', $event)"
+          name="zipCode" class="input-modern" required>
+      </div>
+    </div>
+  </form>
+
+  <!-- Shipping Methods -->
+  <h3 class="text-xl font-bold text-slate-900 mb-6">Método de Envío</h3>
+  <div class="space-y-4 mb-12">
+    @for (method of shippingMethods; track method.id) {
+    <div class="method-card" [class.selected]="selectedMethod()?.id === method.id" (click)="selectMethod(method)">
+      <div class="flex items-center gap-4">
+        <div class="radio-circle">
+          <div class="inner-circle"></div>
+        </div>
+        <div class="flex-grow">
+          <p class="font-bold text-slate-800">{{ method.name }}</p>
+          <p class="text-xs text-slate-500">{{ method.deliveryEstimate }}</p>
+        </div>
+        <div class="text-right">
+          <p class="font-bold text-slate-900">{{ method.price === 0 ? 'Gratis' : (method.price | currency) }}</p>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
+  <!-- Footer Actions -->
+  <div class="flex justify-between items-center pt-8 border-t border-slate-100">
+    <button (click)="prevStep()" class="btn-minimalist-ghost py-2">
+      ← Revisar Carrito
+    </button>
+    <button (click)="nextStep()" [disabled]="!isFormValid()" class="btn-minimalist-indigo px-10 py-4 text-lg">
+      Continuar al Pago
+    </button>
+  </div>
+</div>
