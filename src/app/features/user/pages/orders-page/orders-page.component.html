@@ -1,0 +1,139 @@
+<div class="orders-container transition-opacity duration-700 ease-in-out" [class.opacity-0]="!isVisible()"
+  [class.opacity-100]="isVisible()">
+
+  @if (!selectedOrder()) {
+  <!-- Order List View -->
+  <h1 class="orders-title">Mis Pedidos</h1>
+
+  @if (orders().length === 0) {
+  <div class="empty-state">
+    <svg xmlns="http://www.w3.org/2000/svg" class="empty-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+    </svg>
+    <h2 class="empty-text">Aún no tienes pedidos</h2>
+    <p class="empty-description">Cuando realices tu primera compra, aparecerá aquí para que puedas revisarla.</p>
+    <a routerLink="/products" class="btn-minimalist-indigo px-10">Explorar Productos</a>
+  </div>
+  } @else {
+  <div class="orders-list">
+    @for (order of orders(); track order.id) {
+    <div class="order-card">
+      <div class="order-info">
+        <span class="order-id">Pedido #{{ order.id.split('-')[1] }}</span>
+        <span class="order-date">{{ order.createdAt | date:'mediumDate' }}</span>
+        <span class="order-status status-completed">{{ order.status }}</span>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <span class="order-total">{{ order.total | currency }}</span>
+        <button (click)="onSelectOrder(order.id)" class="btn-minimalist-white py-2 px-4 text-xs">
+          Ver Detalles
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+  }
+  } @else {
+  <!-- Order Details View -->
+  <div class="mb-6 flex items-center gap-4">
+    <button (click)="onBackToList()" class="btn-minimalist-ghost p-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+    </button>
+    <h1 class="text-2xl font-bold text-slate-800">Detalles del Pedido</h1>
+  </div>
+
+  @let order = selectedOrder()!;
+  <div class="order-details">
+    <div class="details-header">
+      <div>
+        <span class="text-xs text-slate-400 uppercase tracking-widest font-bold">Pedido No.</span>
+        <p class="font-bold text-slate-900">#{{ order.id.split('-')[1] }}</p>
+      </div>
+      <div class="text-right">
+        <span class="text-xs text-slate-400 uppercase tracking-widest font-bold">Fecha</span>
+        <p class="font-bold text-slate-900">{{ order.createdAt | date:'longDate' }}</p>
+      </div>
+    </div>
+
+    <div class="details-content">
+      <div class="grid-layout">
+        <!-- Shipping Address -->
+        <div>
+          <h3 class="section-title">Dirección de Envío</h3>
+          <div class="address-info">
+            <p class="font-bold text-slate-900">{{ order.shippingAddress.firstName }} {{ order.shippingAddress.lastName
+              }}</p>
+            <p>{{ order.shippingAddress.address }}</p>
+            <p>{{ order.shippingAddress.city }}, {{ order.shippingAddress.state }} {{ order.shippingAddress.zipCode }}
+            </p>
+            <p>{{ order.shippingAddress.country }}</p>
+          </div>
+        </div>
+
+        <!-- Payment & Method -->
+        <div class="space-y-6">
+          <div>
+            <h3 class="section-title">Método de Envío</h3>
+            <p class="text-slate-700 font-medium">{{ order.shippingMethod.name }} ({{
+              order.shippingMethod.deliveryEstimate }})</p>
+          </div>
+          <div>
+            <h3 class="section-title">Pago</h3>
+            <p class="text-slate-700 font-medium">Tarjeta terminada en {{ order.paymentInfo.cardNumber?.slice(-4) }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Items -->
+      <div class="pt-4">
+        <h3 class="section-title">Productos</h3>
+        <div class="items-list">
+          @for (item of order.items; track item.id) {
+          <div class="item-row">
+            <div class="flex gap-4">
+              <div class="w-16 h-16 bg-slate-50 flex items-center justify-center p-2 border border-slate-100">
+                <img [src]="item.image" [alt]="item.title" class="max-w-full max-h-full object-contain">
+              </div>
+              <div>
+                <p class="font-bold text-slate-900">{{ item.title }}</p>
+                <p class="text-sm text-slate-500">Cantidad: {{ item.quantity }}</p>
+              </div>
+            </div>
+            <p class="font-bold text-slate-900">{{ item.price * item.quantity | currency }}</p>
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- Totals -->
+      <div class="flex justify-end pt-4">
+        <div class="w-full max-w-xs space-y-1">
+          <div class="summary-row">
+            <span class="text-slate-500">Subtotal</span>
+            <span>{{ order.subtotal | currency }}</span>
+          </div>
+          <div class="summary-row">
+            <span class="text-slate-500">Envío</span>
+            <span>{{ order.shippingCost | currency }}</span>
+          </div>
+          @if (order.discountAmount > 0) {
+          <div class="summary-row text-green-600 font-medium">
+            <span>Descuento</span>
+            <span>-{{ order.discountAmount | currency }}</span>
+          </div>
+          }
+          <div class="total-row">
+            <span>Total</span>
+            <span>{{ order.total | currency }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+
+</div>

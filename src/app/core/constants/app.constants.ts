@@ -8,6 +8,7 @@ export const STORAGE_KEYS = {
   ADDRESSES: 'user-addresses',
   THEME: 'app-theme',
   WISHLIST: 'user-wishlist',
+  ORDERS: 'order-history',
 } as const;
 
 export const DEBOUNCE_TIME = {

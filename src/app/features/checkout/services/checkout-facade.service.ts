@@ -10,6 +10,8 @@ import {
 } from '@core/models/order.model';
 import { STORAGE_KEYS } from '@core/constants/app.constants';
 
+import { OrderFacadeService } from '@features/user/services/order-facade.service';
+
 export type CheckoutStep = 'review' | 'shipping' | 'payment' | 'confirmation';
 
 @Injectable({
@@ -17,6 +19,7 @@ export type CheckoutStep = 'review' | 'shipping' | 'payment' | 'confirmation';
 })
 export class CheckoutFacadeService {
   private readonly cartService = inject(CartService);
+  private readonly orderFacade = inject(OrderFacadeService);
   private readonly router = inject(Router);
 
   // Steps state
@@ -141,22 +144,12 @@ export class CheckoutFacadeService {
       }
     };
 
-    this.saveOrderToHistory(newOrder);
+    this.orderFacade.saveOrder(newOrder);
     this.cartService.clearCart();
     this.resetCheckoutState();
     this.goToStep('confirmation');
 
     return newOrder;
-  }
-
-  private saveOrderToHistory(order: Order): void {
-    try {
-      const existingOrdersJson = localStorage.getItem('order-history');
-      const existingOrders: Order[] = existingOrdersJson ? JSON.parse(existingOrdersJson) : [];
-      localStorage.setItem('order-history', JSON.stringify([order, ...existingOrders]));
-    } catch (error) {
-      console.error('Failed to save order to history:', error);
-    }
   }
 
   private resetCheckoutState(): void {

@@ -6,6 +6,8 @@ import { map } from 'rxjs';
 import { WishlistService } from '@features/products/services/wishlist.service';
 import { ProductService } from '@features/products/services/product.service';
 import { CartService } from '@features/cart/services/cart.service';
+import { NotificationService } from '@core/services';
+import { NOTIFICATION_MESSAGES } from '@core/constants';
 import { ProductCardComponent } from '@features/products/components/product-card/product-card.component';
 import { Product } from '@core/models';
 
@@ -35,6 +37,7 @@ export class FavoritesPageComponent {
   private readonly wishlistService = inject(WishlistService);
   private readonly productService = inject(ProductService);
   private readonly cartService = inject(CartService);
+  private readonly notificationService = inject(NotificationService);
 
   /**
    * Signal: All products loaded from API
@@ -77,8 +80,12 @@ export class FavoritesPageComponent {
 
   /**
    * Handle adding product to cart
+   * Muestra notificación de éxito cuando se agrega un producto
    */
   onAddToCart(product: Product): void {
     this.cartService.addToCart(product, 1);
+    this.notificationService.showSuccess(
+      NOTIFICATION_MESSAGES.CART.ADD_SUCCESS
+    );
   }
 }
